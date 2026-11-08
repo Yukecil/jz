@@ -2,20 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <!-- 防止双击缩放，更像原生 App -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#34d399" />
-  
-  <!-- iOS 全屏及状态栏设置 -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  
-  <!-- 主屏幕显示的 App 名称 -->
   <meta name="apple-mobile-web-app-title" content="HeyYu" />
-  
-  <!-- 主屏幕显示的图标（确保同目录下有 apple-touch-icon.png） -->
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
-  
   <title>HeyYu</title>
   <style>
     :root {
@@ -67,13 +59,11 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      /* 增加底部内边距，避免内容被底栏遮挡 */
       padding-bottom: calc(80px + env(safe-area-inset-bottom));
       height: calc(100vh - 24px);
       height: calc(100dvh - 24px);
     }
 
-    /* ---------- 顶栏（只留 Logo 和标题） ---------- */
     .top-header {
       display: flex;
       justify-content: flex-start;
@@ -130,7 +120,6 @@
       margin-top: 3px;
     }
 
-    /* ---------- 月汇总卡片 ---------- */
     .dashboard-card {
       margin: 4px 0 14px;
       background: var(--header-bg);
@@ -187,7 +176,6 @@
       letter-spacing: 0.6px;
     }
 
-    /* ---------- 汇总统计 4 项 ---------- */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -217,7 +205,6 @@
       margin-left: 1px;
     }
 
-    /* ---------- 日历 ---------- */
     .calendar-card {
       background: var(--card-bg);
       border-radius: 24px;
@@ -327,7 +314,6 @@
       white-space: nowrap;
     }
 
-    /* ---------- 页面容器 ---------- */
     .page-section {
       display: none;
       padding: 0 14px 4px;
@@ -347,7 +333,6 @@
       margin-top: 4px;
     }
 
-    /* ---------- 年度统计：5 项指标 ---------- */
     .year-stats-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -401,7 +386,6 @@
       font-weight: 600;
     }
 
-    /* 年份切换 */
     .year-selector {
       display: flex;
       align-items: center;
@@ -434,7 +418,6 @@
       text-align: center;
     }
 
-    /* ---------- 毛玻璃各月明细入口 ---------- */
     .month-glass {
       position: relative;
       overflow: hidden;
@@ -505,7 +488,6 @@
       font-weight: 600;
     }
 
-    /* ---------- 设置入口（年度统计页底部） ---------- */
     .settings-entry-box {
       background: #fff;
       border-radius: 24px;
@@ -537,7 +519,6 @@
       box-shadow: 0 2px 6px rgba(34, 197, 94, 0.18);
     }
 
-    /* ---------- 月份选择器 ---------- */
     .month-picker-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -595,7 +576,6 @@
       color: #cbd5e1;
     }
 
-    /* ---------- 月度详情弹窗 ---------- */
     .month-detail-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -631,7 +611,6 @@
       font-size: 24px;
     }
 
-    /* ---------- 弹窗 ---------- */
     .modal {
       display: none;
       position: fixed;
@@ -824,7 +803,6 @@
       box-shadow: 0 3px 8px rgba(45, 212, 191, 0.4);
     }
 
-    /* ---------- 底部导航 (纯文字，无图标) ---------- */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -847,11 +825,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 15px; /* 字体加大 */
+      font-size: 15px;
       font-weight: 800;
       color: #94a3b8;
       cursor: pointer;
-      padding: 12px 32px; /* 增大点击区域 */
+      padding: 12px 32px;
       border-radius: 999px;
       transition: color 0.2s, background 0.25s, box-shadow 0.25s, transform 0.15s;
     }
@@ -864,7 +842,6 @@
       box-shadow: 0 6px 16px rgba(45, 212, 191, 0.38);
     }
 
-    /* ---------- Toast ---------- */
     .toast {
       position: fixed;
       left: 50%;
@@ -906,7 +883,6 @@
 <body>
 
   <div class="app-container">
-    <!-- 顶部 Header -->
     <div class="top-header">
       <div class="app-title">
         <div class="app-logo" aria-hidden="true">
@@ -915,4 +891,964 @@
             <path d="M50 27 L55 9 L37 19 Z" fill="#fbbf24" stroke="#1f2937" stroke-width="2.2" stroke-linejoin="round"/>
             <path d="M16.5 23 L14 14.5 L22.5 19 Z" fill="#fda4af"/>
             <path d="M47.5 23 L50 14.5 L41.5 19 Z" fill="#fda4af"/>
-            <ellipse cx="32" cy="37" rx="20" ry
+            <ellipse cx="32" cy="37" rx="20" ry="17.5" fill="#fef3c7" stroke="#1f2937" stroke-width="2.2"/>
+            <ellipse cx="25" cy="35" rx="4.4" ry="5.4" fill="#1f2937"/>
+            <ellipse cx="39" cy="35" rx="4.4" ry="5.4" fill="#1f2937"/>
+            <circle cx="26.6" cy="33" r="1.8" fill="#fff"/>
+            <circle cx="40.6" cy="33" r="1.8" fill="#fff"/>
+            <ellipse cx="18.5" cy="43" rx="4" ry="2.4" fill="#fda4af" opacity="0.85"/>
+            <ellipse cx="45.5" cy="43" rx="4" ry="2.4" fill="#fda4af" opacity="0.85"/>
+            <path d="M29.5 39.5 Q32 41.5 34.5 39.5" stroke="#1f2937" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M32 41.5 Q30 45.5 27.8 43.4 M32 41.5 Q34 45.5 36.2 43.4" stroke="#1f2937" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="app-name">HeyYu</div>
+          <div class="app-sub">工时小账本</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="calendarPage" class="page-section active">
+      <div class="dashboard-card">
+        <div class="date-selector">
+          <button class="month-nav" id="prevMonthBtn" aria-label="上个月">&lt;</button>
+          <span class="range-text" id="monthRangeTitle">—</span>
+          <button class="month-nav" id="nextMonthBtn" aria-label="下个月">&gt;</button>
+        </div>
+
+        <div class="stats-grid">
+          <div>
+            <div class="stat-label">总工时</div>
+            <div class="stat-value"><span id="totalHours">0</span><span class="stat-unit">h</span></div>
+          </div>
+          <div>
+            <div class="stat-label">总收入</div>
+            <div class="stat-value">¥<span id="totalIncome">0</span></div>
+          </div>
+          <div>
+            <div class="stat-label">总天数</div>
+            <div class="stat-value"><span id="totalDays">0</span><span class="stat-unit">天</span></div>
+          </div>
+          <div>
+            <div class="stat-label">总补助</div>
+            <div class="stat-value">¥<span id="totalSubsidy">0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calendar-card">
+        <div class="week-header">
+          <div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div>
+        </div>
+        <div class="days-grid" id="daysGrid"></div>
+      </div>
+    </div>
+
+    <div id="statsPage" class="page-section">
+      <div class="stats-card-box">
+        <div class="year-selector">
+          <button id="prevYearBtn" aria-label="上一年">&lt;</button>
+          <span id="currentYearTitle">—</span>
+          <button id="nextYearBtn" aria-label="下一年">&gt;</button>
+        </div>
+
+        <div class="year-stats-grid">
+          <div class="year-stat-item">
+            <div class="year-stat-num"><span id="yearTotalHours">0</span><span class="year-stat-unit">h</span></div>
+            <div class="year-stat-label">总工时</div>
+          </div>
+          <div class="year-stat-item">
+            <div class="year-stat-num" style="color:#f59e0b;">¥<span id="yearTotalIncome">0</span></div>
+            <div class="year-stat-label">总收入</div>
+          </div>
+          <div class="year-stat-item">
+            <div class="year-stat-num" style="color:#3b82f6;"><span id="yearTotalDays">0</span><span class="year-stat-unit">天</span></div>
+            <div class="year-stat-label">打卡天数</div>
+          </div>
+          <div class="year-stat-item">
+            <div class="year-stat-num" style="color:#d97706;"><span id="yearDayCount">0</span><span class="year-stat-unit">天</span></div>
+            <div class="year-stat-label">☀️ 白班</div>
+          </div>
+          <div class="year-stat-item">
+            <div class="year-stat-num" style="color:#4338ca;"><span id="yearNightCount">0</span><span class="year-stat-unit">天</span></div>
+            <div class="year-stat-label">🌙 夜班</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="month-glass">
+        <h3>🗓️ 各月明细</h3>
+        <button class="month-enter-btn" id="openMonthPickerBtn">
+          <span class="month-enter-main">📊 点击打开</span>
+          <span class="month-enter-hint">查看月份列表 →</span>
+        </button>
+      </div>
+
+      <div class="settings-entry-box">
+        <button class="settings-entry-btn" id="openSettingsBtn">
+          ⚙️ 默认设置 / 数据管理
+        </button>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item active" data-target="calendarPage">
+        <div>主页</div>
+      </div>
+      <div class="nav-item" data-target="statsPage">
+        <div>统计</div>
+      </div>
+    </div>
+
+    <div class="modal" id="actionModal">
+      <div class="modal-content">
+        <div class="modal-title" id="actionModalTitle">选择打卡</div>
+        <div class="current-log" id="currentLogInfo" hidden></div>
+
+        <div class="btn-grid-actions">
+          <button class="btn-small-action day-btn" id="btnDayShift">
+            <span>☀️ 白班打卡</span>
+            <span class="sub-info" id="dayShiftSubText"></span>
+          </button>
+          <button class="btn-small-action night-btn" id="btnNightShift">
+            <span>🌙 夜班打卡</span>
+            <span class="sub-info" id="nightShiftSubText"></span>
+          </button>
+          <button class="btn-small-action custom-btn" id="btnCustomShift">
+            <span>✏️ 自定义打卡</span>
+            <span class="sub-info">任意工时 / 薪资</span>
+          </button>
+          <button class="btn-small-action danger-btn" id="btnClearShift" hidden>
+            <span id="clearShiftText">🗑️ 清除打卡</span>
+            <span class="sub-info">删除本日记录</span>
+          </button>
+        </div>
+
+        <button class="btn-small-action" style="width: 100%;" data-close="actionModal">取消</button>
+      </div>
+    </div>
+
+    <div class="modal" id="customModal">
+      <div class="modal-content">
+        <div class="modal-title" id="customModalTitle">自定义打卡</div>
+        <div class="form-group">
+          <label>当日工时（支持 0.5）</label>
+          <input type="number" step="0.5" min="0" inputmode="decimal" id="customHoursInput" placeholder="例如：8 或 10.5" />
+        </div>
+        <div class="form-group">
+          <label>每小时薪资（元）</label>
+          <input type="number" step="0.5" min="0" inputmode="decimal" id="customRateInput" placeholder="例如：25" />
+        </div>
+        <div class="form-group">
+          <label>当日补贴（元）</label>
+          <input type="number" step="1" inputmode="decimal" id="customSubsidyInput" placeholder="例如：30" />
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancel" data-close="customModal">取消</button>
+          <button class="btn-save" id="saveCustomBtn">保存打卡</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="monthPickerModal">
+      <div class="modal-content">
+        <div class="modal-title" id="monthPickerTitle">选择月份</div>
+        <div class="modal-subtitle" id="monthPickerSub">点击某个月查看详细数据</div>
+
+        <div class="month-picker-grid" id="monthPickerGrid"></div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" data-close="monthPickerModal">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="monthDetailModal">
+      <div class="modal-content">
+        <div class="modal-title" id="monthDetailTitle">月度详情</div>
+
+        <div class="month-detail-grid">
+          <div class="md-item md-income">
+            <div class="md-label">当月总收入</div>
+            <div class="md-value" id="mdIncome">¥0</div>
+          </div>
+          <div class="md-item">
+            <div class="md-label">总工时</div>
+            <div class="md-value" id="mdHours">0h</div>
+          </div>
+          <div class="md-item">
+            <div class="md-label">打卡天数</div>
+            <div class="md-value" id="mdDays">0天</div>
+          </div>
+          <div class="md-item">
+            <div class="md-label">☀️ 白班</div>
+            <div class="md-value" id="mdDayCount">0天</div>
+          </div>
+          <div class="md-item">
+            <div class="md-label">🌙 夜班</div>
+            <div class="md-value" id="mdNightCount">0天</div>
+          </div>
+          <div class="md-item">
+            <div class="md-label">✏️ 自定义</div>
+            <div class="md-value" id="mdCustomCount">0天</div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" data-close="monthDetailModal">关闭</button>
+          <button class="btn-save" id="gotoMonthBtn">查看该月打卡 →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="settingsModal">
+      <div class="modal-content">
+        <div class="modal-title">默认白班 / 夜班参数</div>
+
+        <div class="form-section-title">☀️ 默认白班</div>
+        <div class="form-group">
+          <label>工时（小时）</label>
+          <input type="number" step="0.5" min="0" inputmode="decimal" id="dayHoursInput" />
+        </div>
+        <div class="form-group">
+          <label>时薪（元/小时）</label>
+          <input type="number" step="0.5" min="0" inputmode="decimal" id="dayRateInput" />
+        </div>
+        <div class="form-group">
+          <label>补贴（元）</label>
+          <input type="number" step="1" inputmode="decimal" id="daySubsidyInput" />
+        </div>
+
+        <div class="form-section-title">🌙 默认夜班</div>
+        <div class="form-group">
+          <label>工时（小时）</label>
+          <input type="number" step="0.5" min="0" inputmode="decimal" id="nightHoursInput" />
+        </div>
+        <div class="form-group">
+          <label>时薪（元/小时）</label>
+          <input type="number" step="0.5" min="0" inputmode="decimal" id="nightRateInput" />
+        </div>
+        <div class="form-group">
+          <label>补贴（元）</label>
+          <input type="number" step="1" inputmode="decimal" id="nightSubsidyInput" />
+        </div>
+
+        <div class="form-section-title">💾 数据管理</div>
+        <div class="data-actions">
+          <button class="btn-small-action" id="exportBtn">⬇️ 导出</button>
+          <button class="btn-small-action" id="importBtn">⬆️ 导入</button>
+          <button class="btn-small-action danger-btn" id="clearAllBtn">🧹 清空</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json,.json" hidden />
+
+        <div class="modal-actions">
+          <button class="btn-cancel" data-close="settingsModal">取消</button>
+          <button class="btn-save" id="saveSettingsBtn">保存默认</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const KEY_LOGS = 'workLogs';
+    const KEY_DAY = 'dayShiftConfig';
+    const KEY_NIGHT = 'nightShiftConfig';
+
+    const DEFAULT_DAY = { hours: 8, rate: 25, subsidy: 0 };
+    const DEFAULT_NIGHT = { hours: 8, rate: 30, subsidy: 20 };
+
+    const $ = (id) => document.getElementById(id);
+    const pad2 = (n) => String(n).padStart(2, '0');
+    const fmtDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+
+    const cleanNum = (n) => {
+      const v = Number(n);
+      if (!Number.isFinite(v)) return 0;
+      return parseFloat(v.toFixed(10));
+    };
+
+    const toNum = (v, def = 0) => (Number.isFinite(Number(v)) ? Number(v) : def);
+    const fmtMoney = (n) =>
+      cleanNum(n).toLocaleString('zh-CN', { maximumFractionDigits: 10 });
+    const fmtHours = (n) => String(cleanNum(n));
+
+    const logIncome = (log) =>
+      (Number(log.hours) || 0) * (Number(log.rate) || 0) + (Number(log.subsidy) || 0);
+
+    function safeParse(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        const val = JSON.parse(raw);
+        return val === null || val === undefined ? fallback : val;
+      } catch (e) {
+        console.warn('[小账本] 本地数据解析失败：', key, e);
+        return fallback;
+      }
+    }
+
+    function normalizeConfig(raw, def) {
+      if (!raw || typeof raw !== 'object') return Object.assign({}, def);
+      return {
+        hours: Math.max(0, toNum(raw.hours, def.hours)),
+        rate: Math.max(0, toNum(raw.rate, def.rate)),
+        subsidy: toNum(raw.subsidy, def.subsidy)
+      };
+    }
+
+    function sanitizeLogs(raw) {
+      const out = {};
+      if (!raw || typeof raw !== 'object') return out;
+      Object.keys(raw).forEach((key) => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return;
+        const l = raw[key];
+        if (!l || typeof l !== 'object') return;
+        const hours = Number(l.hours);
+        if (!Number.isFinite(hours) || hours <= 0) return;
+        out[key] = {
+          type: ['day', 'night', 'custom'].indexOf(l.type) > -1 ? l.type : 'custom',
+          hours: hours,
+          rate: Math.max(0, toNum(l.rate, 0)),
+          subsidy: toNum(l.subsidy, 0)
+        };
+      });
+      return out;
+    }
+
+    let dayShiftConfig = normalizeConfig(safeParse(KEY_DAY, null), DEFAULT_DAY);
+    let nightShiftConfig = normalizeConfig(safeParse(KEY_NIGHT, null), DEFAULT_NIGHT);
+    let workLogs = sanitizeLogs(safeParse(KEY_LOGS, {}));
+
+    function persistLogs() {
+      try {
+        localStorage.setItem(KEY_LOGS, JSON.stringify(workLogs));
+      } catch (e) {
+        toast('保存失败，存储空间可能已满');
+      }
+    }
+
+    const now = new Date();
+    const VIEW = { year: now.getFullYear(), month: now.getMonth() };
+    const STAT = { year: now.getFullYear() };
+    let selectedDateStr = '';
+    let monthDetailTarget = null;
+
+    let toastTimer = null;
+    function toast(msg) {
+      const el = $('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 1900);
+    }
+
+    function renderCalendar() {
+      const y = VIEW.year;
+      const m = VIEW.month;
+
+      $('monthRangeTitle').textContent = `${y}年${m + 1}月`;
+
+      const firstDay = new Date(y, m, 1);
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      const offset = (firstDay.getDay() + 6) % 7;
+      const totalCells = Math.ceil((offset + daysInMonth) / 7) * 7;
+      const todayStr = fmtDate(new Date());
+
+      const frag = document.createDocumentFragment();
+
+      for (let i = 0; i < totalCells; i++) {
+        const d = new Date(y, m, i - offset + 1);
+        const dateStr = fmtDate(d);
+        const isOtherMonth = d.getMonth() !== m || d.getFullYear() !== y;
+        const log = workLogs[dateStr];
+
+        const cell = document.createElement('div');
+        cell.className = 'day-cell';
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('tabindex', '0');
+        if (isOtherMonth) cell.classList.add('other-month');
+        if (dateStr === todayStr) cell.classList.add('today');
+        cell.setAttribute('aria-label',
+          dateStr + (log && log.hours > 0 ? '，已有打卡记录' : ''));
+
+        const num = document.createElement('div');
+        num.className = 'day-num';
+        num.textContent = String(d.getDate());
+        cell.appendChild(num);
+
+        if (log && log.hours > 0) {
+          const badge = document.createElement('div');
+          badge.className = 'work-badge ' + (
+            log.type === 'day' ? 'day-shift' :
+            log.type === 'night' ? 'night-shift' : 'custom-shift'
+          );
+          const prefix = log.type === 'day' ? '白 ' : log.type === 'night' ? '夜 ' : '';
+          badge.textContent = `${prefix}${fmtHours(log.hours)}h`;
+
+          const inc = document.createElement('div');
+          inc.className = 'income-text';
+          inc.textContent = `¥${fmtMoney(logIncome(log))}`;
+
+          cell.appendChild(badge);
+          cell.appendChild(inc);
+        }
+
+        const onClick = () => handleDayClick(dateStr, d.getFullYear(), d.getMonth());
+        cell.addEventListener('click', onClick);
+        cell.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        });
+
+        frag.appendChild(cell);
+      }
+
+      const grid = $('daysGrid');
+      grid.innerHTML = '';
+      grid.appendChild(frag);
+
+      renderMonthStats();
+    }
+
+    function handleDayClick(dateStr, year, month) {
+      if (year !== VIEW.year || month !== VIEW.month) {
+        VIEW.year = year;
+        VIEW.month = month;
+        renderCalendar();
+      }
+      openActionModal(dateStr);
+    }
+
+    function summarize(prefix) {
+      let hours = 0, income = 0, days = 0, subsidy = 0;
+      let dayCount = 0, nightCount = 0, customCount = 0;
+      for (const ds in workLogs) {
+        if (ds.indexOf(prefix) !== 0) continue;
+        const log = workLogs[ds];
+        if (!log || !(log.hours > 0)) continue;
+        hours += Number(log.hours) || 0;
+        income += logIncome(log);
+        subsidy += Number(log.subsidy) || 0;
+        days++;
+        if (log.type === 'day') dayCount++;
+        else if (log.type === 'night') nightCount++;
+        else customCount++;
+      }
+      return {
+        hours: cleanNum(hours),
+        income: cleanNum(income),
+        subsidy: cleanNum(subsidy),
+        days: days,
+        dayCount: dayCount,
+        nightCount: nightCount,
+        customCount: customCount
+      };
+    }
+
+    function renderMonthStats() {
+      const s = summarize(`${VIEW.year}-${pad2(VIEW.month + 1)}`);
+      $('totalHours').textContent = fmtHours(s.hours);
+      $('totalIncome').textContent = fmtMoney(s.income);
+      $('totalDays').textContent = s.days;
+      $('totalSubsidy').textContent = fmtMoney(s.subsidy);
+    }
+
+    function renderYearStats() {
+      const y = STAT.year;
+      $('currentYearTitle').textContent = `${y} 年`;
+
+      const s = summarize(String(y));
+      $('yearTotalHours').textContent = fmtHours(s.hours);
+      $('yearTotalIncome').textContent = fmtMoney(s.income);
+      $('yearTotalDays').textContent = s.days;
+      $('yearDayCount').textContent = s.dayCount;
+      $('yearNightCount').textContent = s.nightCount;
+
+      if (openModals.indexOf('monthPickerModal') > -1) {
+        renderMonthPicker();
+      }
+    }
+
+    function renderMonthPicker() {
+      const year = STAT.year;
+      $('monthPickerTitle').textContent = `${year}年 · 选择月份`;
+      $('monthPickerSub').textContent = '点击某个月查看详细数据';
+
+      const grid = $('monthPickerGrid');
+      grid.innerHTML = '';
+      const frag = document.createDocumentFragment();
+
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth();
+
+      for (let m = 0; m < 12; m++) {
+        const s = summarize(`${year}-${pad2(m + 1)}`);
+        const item = document.createElement('div');
+        item.className = 'month-pick-item';
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+
+        if (s.days === 0) item.classList.add('empty');
+        if (year === currentYear && m === currentMonth) item.classList.add('current');
+
+        const num = document.createElement('div');
+        num.className = 'month-pick-num';
+        num.textContent = `${m + 1}月`;
+
+        const hoursEl = document.createElement('div');
+        hoursEl.className = 'month-pick-hours';
+        hoursEl.textContent = s.days > 0
+          ? `${fmtHours(s.hours)}h · ${s.days}天`
+          : '无记录';
+
+        item.appendChild(num);
+        item.appendChild(hoursEl);
+
+        const onClick = () => {
+          closeModal('monthPickerModal');
+          openMonthDetail(year, m);
+        };
+        item.addEventListener('click', onClick);
+        item.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        });
+
+        frag.appendChild(item);
+      }
+
+      grid.appendChild(frag);
+    }
+
+    function openMonthPicker() {
+      renderMonthPicker();
+      openModal('monthPickerModal');
+    }
+
+    function openMonthDetail(year, month) {
+      monthDetailTarget = { year: year, month: month };
+      const s = summarize(`${year}-${pad2(month + 1)}`);
+
+      $('monthDetailTitle').textContent = `${year}年${month + 1}月`;
+      $('mdIncome').textContent = `¥${fmtMoney(s.income)}`;
+      $('mdHours').textContent = `${fmtHours(s.hours)}h`;
+      $('mdDays').textContent = `${s.days}天`;
+      $('mdDayCount').textContent = `${s.dayCount}天`;
+      $('mdNightCount').textContent = `${s.nightCount}天`;
+      $('mdCustomCount').textContent = `${s.customCount}天`;
+
+      openModal('monthDetailModal');
+    }
+
+    function gotoMonthFromDetail() {
+      if (!monthDetailTarget) return;
+      const y = monthDetailTarget.year;
+      const m = monthDetailTarget.month;
+
+      closeModal('monthDetailModal');
+
+      VIEW.year = y;
+      VIEW.month = m;
+
+      document.querySelectorAll('.nav-item').forEach((n) => n.classList.remove('active'));
+      const calNav = document.querySelector('.nav-item[data-target="calendarPage"]');
+      if (calNav) calNav.classList.add('active');
+      document.querySelectorAll('.page-section').forEach((sec) => sec.classList.remove('active'));
+      $('calendarPage').classList.add('active');
+
+      renderCalendar();
+      toast(`已跳转到 ${y}年${m + 1}月`);
+    }
+
+    const openModals = [];
+
+    function openModal(id) {
+      const el = $(id);
+      if (!el) return;
+      el.classList.add('active');
+      if (openModals.indexOf(id) === -1) openModals.push(id);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      const el = $(id);
+      if (!el) return;
+      el.classList.remove('active');
+      const idx = openModals.indexOf(id);
+      if (idx > -1) openModals.splice(idx, 1);
+      if (openModals.length === 0) document.body.style.overflow = '';
+      if (id === 'actionModal') resetClearButton();
+    }
+
+    function closeAllModals() {
+      openModals.slice().forEach(closeModal);
+    }
+
+    function resetClearButton() {
+      const btn = $('btnClearShift');
+      btn.classList.remove('armed');
+      $('clearShiftText').textContent = '🗑️ 清除打卡';
+      clearTimeout(btn._armTimer);
+    }
+
+    function openActionModal(dateStr) {
+      selectedDateStr = dateStr;
+      $('actionModalTitle').textContent = `${dateStr} 打卡`;
+
+      const d = dayShiftConfig;
+      const n = nightShiftConfig;
+      $('dayShiftSubText').textContent =
+        `${fmtHours(d.hours)}h / ¥${d.rate} / 补${d.subsidy}`;
+      $('nightShiftSubText').textContent =
+        `${fmtHours(n.hours)}h / ¥${n.rate} / 补${n.subsidy}`;
+
+      const log = workLogs[dateStr];
+      const hasLog = !!(log && log.hours > 0);
+
+      const info = $('currentLogInfo');
+      if (hasLog) {
+        const typeName = log.type === 'day' ? '白班' : log.type === 'night' ? '夜班' : '自定义';
+        info.textContent =
+          `当前记录：${typeName} ${fmtHours(log.hours)}h · ¥${fmtMoney(logIncome(log))}`;
+        info.hidden = false;
+      } else {
+        info.hidden = true;
+      }
+
+      resetClearButton();
+      $('btnClearShift').hidden = !hasLog;
+
+      openModal('actionModal');
+    }
+
+    function applyPresetCheckin(type) {
+      const cfg = type === 'day' ? dayShiftConfig : nightShiftConfig;
+      workLogs[selectedDateStr] = {
+        type: type,
+        hours: cfg.hours,
+        rate: cfg.rate,
+        subsidy: cfg.subsidy
+      };
+      persistLogs();
+      closeModal('actionModal');
+      renderCalendar();
+      if (isStatsActive()) renderYearStats();
+      toast(`已记录 ${fmtHours(cfg.hours)}h ${type === 'day' ? '白班' : '夜班'}`);
+    }
+
+    function openCustomModal() {
+      const existing = workLogs[selectedDateStr];
+      const base = existing && existing.hours > 0
+        ? existing
+        : { hours: dayShiftConfig.hours, rate: dayShiftConfig.rate, subsidy: dayShiftConfig.subsidy };
+
+      $('customModalTitle').textContent = `${selectedDateStr} 自定义打卡`;
+      $('customHoursInput').value = fmtHours(base.hours);
+      $('customRateInput').value = base.rate;
+      $('customSubsidyInput').value = base.subsidy || 0;
+
+      openModal('customModal');
+      setTimeout(() => {
+        const input = $('customHoursInput');
+        input.focus();
+        input.select && input.select();
+      }, 120);
+    }
+
+    function saveCustomCheckin() {
+      const hours = parseFloat($('customHoursInput').value);
+      const rateRaw = parseFloat($('customRateInput').value);
+      const subsidyRaw = parseFloat($('customSubsidyInput').value);
+
+      if (!Number.isFinite(hours) || hours <= 0) {
+        toast('请输入有效的工时');
+        $('customHoursInput').focus();
+        return;
+      }
+
+      workLogs[selectedDateStr] = {
+        type: 'custom',
+        hours: hours,
+        rate: Number.isFinite(rateRaw) ? Math.max(0, rateRaw) : dayShiftConfig.rate,
+        subsidy: Number.isFinite(subsidyRaw) ? subsidyRaw : 0
+      };
+
+      persistLogs();
+      closeModal('customModal');
+      renderCalendar();
+      if (isStatsActive()) renderYearStats();
+      toast('已保存自定义打卡');
+    }
+
+    function onClearClick() {
+      const btn = $('btnClearShift');
+
+      if (!btn.classList.contains('armed')) {
+        btn.classList.add('armed');
+        $('clearShiftText').textContent = '⚠️ 再点一次确认删除';
+        clearTimeout(btn._armTimer);
+        btn._armTimer = setTimeout(resetClearButton, 3000);
+        return;
+      }
+
+      delete workLogs[selectedDateStr];
+      persistLogs();
+      resetClearButton();
+      closeModal('actionModal');
+      renderCalendar();
+      if (isStatsActive()) renderYearStats();
+      toast('已删除该日记录');
+    }
+
+    function openSettingsModal() {
+      $('dayHoursInput').value = dayShiftConfig.hours;
+      $('dayRateInput').value = dayShiftConfig.rate;
+      $('daySubsidyInput').value = dayShiftConfig.subsidy;
+
+      $('nightHoursInput').value = nightShiftConfig.hours;
+      $('nightRateInput').value = nightShiftConfig.rate;
+      $('nightSubsidyInput').value = nightShiftConfig.subsidy;
+
+      openModal('settingsModal');
+    }
+
+    function readNumber(id, fallback, min) {
+      const v = parseFloat($(id).value);
+      if (!Number.isFinite(v)) return fallback;
+      return min !== undefined ? Math.max(min, v) : v;
+    }
+
+    function saveSettings() {
+      const prevDay = Object.assign({}, dayShiftConfig);
+      const prevNight = Object.assign({}, nightShiftConfig);
+
+      dayShiftConfig = {
+        hours: readNumber('dayHoursInput', prevDay.hours, 0),
+        rate: readNumber('dayRateInput', prevDay.rate, 0),
+        subsidy: readNumber('daySubsidyInput', prevDay.subsidy)
+      };
+      nightShiftConfig = {
+        hours: readNumber('nightHoursInput', prevNight.hours, 0),
+        rate: readNumber('nightRateInput', prevNight.rate, 0),
+        subsidy: readNumber('nightSubsidyInput', prevNight.subsidy)
+      };
+
+      try {
+        localStorage.setItem(KEY_DAY, JSON.stringify(dayShiftConfig));
+        localStorage.setItem(KEY_NIGHT, JSON.stringify(nightShiftConfig));
+      } catch (e) {
+        toast('保存失败，存储空间可能已满');
+      }
+
+      closeModal('settingsModal');
+      renderCalendar();
+      toast('默认参数已更新');
+    }
+
+    function exportData() {
+      const payload = {
+        app: 'HeyYu',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        dayShiftConfig: dayShiftConfig,
+        nightShiftConfig: nightShiftConfig,
+        logs: workLogs
+      };
+
+      try {
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `工时记账-${fmtDate(new Date())}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        toast('备份已导出');
+      } catch (e) {
+        toast('导出失败，请稍后再试');
+      }
+    }
+
+    function importData(file) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        let data;
+        try {
+          data = JSON.parse(String(reader.result));
+        } catch (e) {
+          toast('导入失败：不是有效的 JSON 文件');
+          return;
+        }
+
+        if (!data || typeof data !== 'object') {
+          toast('导入失败：文件内容格式不正确');
+          return;
+        }
+
+        const rawLogs = data.logs && typeof data.logs === 'object' ? data.logs : data;
+        const logs = sanitizeLogs(rawLogs);
+
+        if (Object.keys(logs).length === 0) {
+          toast('导入失败：未找到有效记录');
+          return;
+        }
+
+        if (!confirm(`将导入 ${Object.keys(logs).length} 条记录，是否覆盖当前全部数据？`)) {
+          return;
+        }
+
+        workLogs = logs;
+        if (data.dayShiftConfig) dayShiftConfig = normalizeConfig(data.dayShiftConfig, dayShiftConfig);
+        if (data.nightShiftConfig) nightShiftConfig = normalizeConfig(data.nightShiftConfig, nightShiftConfig);
+
+        persistLogs();
+        try {
+          localStorage.setItem(KEY_DAY, JSON.stringify(dayShiftConfig));
+          localStorage.setItem(KEY_NIGHT, JSON.stringify(nightShiftConfig));
+        } catch (e) { /* 忽略 */ }
+
+        closeModal('settingsModal');
+        renderCalendar();
+        renderYearStats();
+        toast('导入成功');
+      };
+      reader.onerror = function () {
+        toast('导入失败：文件读取异常');
+      };
+      reader.readAsText(file);
+    }
+
+    function clearAllData() {
+      if (!confirm('确定要清空全部打卡记录吗？此操作不可恢复，建议先导出备份。')) return;
+      if (!confirm('再次确认：所有工时记录将被永久删除。')) return;
+
+      workLogs = {};
+      persistLogs();
+      closeModal('settingsModal');
+      renderCalendar();
+      renderYearStats();
+      toast('已清空全部记录');
+    }
+
+    function changeMonth(delta) {
+      let m = VIEW.month + delta;
+      let y = VIEW.year;
+      if (m < 0) { m = 11; y--; }
+      if (m > 11) { m = 0; y++; }
+      VIEW.year = y;
+      VIEW.month = m;
+      renderCalendar();
+      if (isStatsActive()) renderYearStats();
+    }
+
+    function changeStatYear(delta) {
+      STAT.year += delta;
+      renderYearStats();
+    }
+
+    function isStatsActive() {
+      return $('statsPage').classList.contains('active');
+    }
+
+    function initNavigation() {
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach((item) => {
+        item.addEventListener('click', () => {
+          const targetId = item.getAttribute('data-target');
+          if (item.classList.contains('active')) return;
+
+          navItems.forEach((n) => n.classList.remove('active'));
+          item.classList.add('active');
+
+          document.querySelectorAll('.page-section').forEach((sec) => sec.classList.remove('active'));
+          $(targetId).classList.add('active');
+
+          if (targetId === 'statsPage') {
+            renderYearStats();
+          } else {
+            renderCalendar();
+          }
+        });
+      });
+    }
+
+    function bindEvents() {
+      $('prevMonthBtn').addEventListener('click', () => changeMonth(-1));
+      $('nextMonthBtn').addEventListener('click', () => changeMonth(1));
+
+      $('prevYearBtn').addEventListener('click', () => changeStatYear(-1));
+      $('nextYearBtn').addEventListener('click', () => changeStatYear(1));
+
+      $('openSettingsBtn').addEventListener('click', openSettingsModal);
+      $('saveSettingsBtn').addEventListener('click', saveSettings);
+
+      $('openMonthPickerBtn').addEventListener('click', openMonthPicker);
+      $('gotoMonthBtn').addEventListener('click', gotoMonthFromDetail);
+
+      $('btnDayShift').addEventListener('click', () => applyPresetCheckin('day'));
+      $('btnNightShift').addEventListener('click', () => applyPresetCheckin('night'));
+      $('btnCustomShift').addEventListener('click', () => {
+        closeModal('actionModal');
+        openCustomModal();
+      });
+      $('btnClearShift').addEventListener('click', onClearClick);
+      $('saveCustomBtn').addEventListener('click', saveCustomCheckin);
+
+      ['customHoursInput', 'customRateInput', 'customSubsidyInput'].forEach((id) => {
+        $(id).addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            saveCustomCheckin();
+          }
+        });
+      });
+
+      $('exportBtn').addEventListener('click', exportData);
+      $('importBtn').addEventListener('click', () => $('importFile').click());
+      $('importFile').addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) importData(file);
+        e.target.value = '';
+      });
+      $('clearAllBtn').addEventListener('click', clearAllData);
+
+      document.querySelectorAll('[data-close]').forEach((btn) => {
+        btn.addEventListener('click', () => closeModal(btn.getAttribute('data-close')));
+      });
+
+      document.querySelectorAll('.modal').forEach((modal) => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal(modal.id);
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && openModals.length > 0) {
+          closeModal(openModals[openModals.length - 1]);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      initNavigation();
+      bindEvents();
+      renderCalendar();
+      renderYearStats();
+    });
+  })();
+  </script>
+</body>
+</html>
