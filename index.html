@@ -9,13 +9,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="HeyYu" />
   
-  <!-- 图标直链 -->
   <link rel="apple-touch-icon" sizes="180x180" href="https://a1.ax1x.com/2026/11/09/wPJ6X.jpg" />
   
-  <!-- 引入农历、节气计算库 -->
   <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
 
-  <title>HeyYu 个人编写 </title>
+  <title>HeyYu 工时小账本</title>
   <style>
     :root {
       --bg-base: #fbfbf9;
@@ -112,20 +110,23 @@
     .app-name { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--primary); }
     .app-sub { font-size: 10px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
 
-    /* 毛玻璃按钮 */
+    /* ✅ 修复了看不清的设置按钮 */
     .header-action-btn {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      color: var(--text-main);
+      background: #ffffff; /* 浅色模式纯白底 */
+      border: 1px solid #e2e8f0;
+      color: #475569;
       padding: 8px 14px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       transition: all 0.2s;
+    }
+    [data-theme="dark"] .header-action-btn {
+      background: var(--glass-bg);
+      border-color: var(--glass-border);
+      color: var(--text-main);
     }
     .header-action-btn:active { transform: scale(0.95); }
 
@@ -340,34 +341,63 @@
     .nav-item { font-size: 14px; font-weight: 800; color: var(--text-sub); cursor: pointer; padding: 8px 36px; border-radius: 999px; transition: all 0.2s; }
     .nav-item.active { color: #ffffff; background: var(--primary); box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3); }
 
-    /* 弹窗样式 */
+    /* 弹窗通用 */
     .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
     .modal.active { display: flex; }
     .modal-content { background: var(--bg-card); width: 100%; max-width: 350px; border-radius: 28px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: 90vh; overflow-y: auto; transition: background 0.3s; }
-    .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; text-align: center; color: var(--text-main); }
     
-    /* 四个快捷按钮 */
-    .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
-    .btn-action-quick { padding: 12px 2px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--bg-input); font-size: 11px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.15s; }
+    /* 顶部大号日期 */
+    .modal-date-wrapper { text-align: center; margin-bottom: 20px; }
+    .modal-date-day { font-size: 36px; font-weight: 900; color: var(--text-main); line-height: 1; letter-spacing: -1px; }
+    .modal-date-month { font-size: 13px; color: var(--text-sub); margin-top: 6px; font-weight: 600; }
+
+    /* 三个快捷按钮 */
+    .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    .btn-action-quick { padding: 14px 6px; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-input); font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all 0.15s; }
     .btn-action-quick:active { transform: scale(0.94); }
     .btn-action-quick.day { background: #fffbeb; border-color: #fde68a; color: #b45309; }
     .btn-action-quick.night { background: #eef2ff; border-color: #c7d2fe; color: #3730a3; }
     .btn-action-quick.custom { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
-    .btn-action-quick.rest { background: #f3f4f6; border-color: #d1d5db; color: #4b5563; }
     
     [data-theme="dark"] .btn-action-quick.day { background: rgba(217, 119, 6, 0.2); border-color: #78350f; color: #fcd34d; }
     [data-theme="dark"] .btn-action-quick.night { background: rgba(67, 56, 202, 0.2); border-color: #312e81; color: #a5b4fc; }
     [data-theme="dark"] .btn-action-quick.custom { background: rgba(4, 120, 87, 0.2); border-color: #064e3b; color: #6ee7b7; }
-    [data-theme="dark"] .btn-action-quick.rest { background: rgba(107, 114, 128, 0.2); border-color: #374151; color: #d1d5db; }
 
-    #customInputsArea { display: none; margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border-color); }
+    /* ✅ 大号休息卡片 */
+    .btn-rest-large {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px dashed #cbd5e1;
+      background: #f8fafc;
+      margin-bottom: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .btn-rest-large:active { transform: scale(0.97); background: #f1f5f9; }
+    .rest-icon { font-size: 28px; margin-right: 14px; }
+    .rest-title { font-size: 15px; font-weight: 800; color: #334155; margin-bottom: 3px; }
+    .rest-sub { font-size: 11px; color: #94a3b8; }
+    
+    [data-theme="dark"] .btn-rest-large { border-color: #475569; background: rgba(30, 41, 59, 0.5); }
+    [data-theme="dark"] .btn-rest-large:active { background: rgba(30, 41, 59, 0.8); }
+    [data-theme="dark"] .rest-title { color: #e2e8f0; }
+    [data-theme="dark"] .rest-sub { color: #64748b; }
+
+    /* 自定义输入区 */
+    #customInputsArea { display: none; margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border-color); margin-bottom: 10px; }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
     .form-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 14px; font-size: 16px; outline: none; background: var(--bg-input); color: var(--text-main); -webkit-appearance: none; transition: all 0.2s; }
     .form-group input:focus { border-color: var(--primary); }
+
     .backup-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; margin-bottom: 8px; }
     .btn-backup { padding: 12px; border: 1px solid var(--border-color); border-radius: 14px; background: var(--bg-input); font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; }
     .btn-backup:active { background: var(--border-color); }
+    
     .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
     .modal-actions button { flex: 1; padding: 12px; border: none; border-radius: 14px; font-size: 14px; font-weight: bold; cursor: pointer; }
     .btn-cancel { background: var(--bg-input); color: var(--text-sub); border: 1px solid var(--border-color); }
@@ -482,33 +512,48 @@
       <div class="nav-item" data-target="aboutPage">关于</div>
     </div>
 
-    <!-- 打卡弹窗 -->
+    <!-- ✅ 改版后的打卡弹窗 -->
     <div class="modal" id="actionModal">
       <div class="modal-content">
-        <div class="modal-title" id="actionModalTitle">每日打卡</div>
+        
+        <!-- 大号日期 -->
+        <div class="modal-date-wrapper">
+          <div class="modal-date-day" id="modalDateDay">9</div>
+          <div class="modal-date-month" id="modalDateMonth">11月 · 星期日</div>
+        </div>
+
+        <!-- 三个小快捷按钮 -->
         <div class="action-grid">
           <button class="btn-action-quick day" id="quickDayBtn">
             <span>☀️ 白班</span>
-            <span style="font-size:9px;opacity:0.8;" id="quickDayDesc">8h</span>
+            <span style="font-size:10px;opacity:0.8;" id="quickDayDesc">8h</span>
           </button>
           <button class="btn-action-quick night" id="quickNightBtn">
             <span>🌙 夜班</span>
-            <span style="font-size:9px;opacity:0.8;" id="quickNightDesc">8h</span>
+            <span style="font-size:10px;opacity:0.8;" id="quickNightDesc">8h</span>
           </button>
           <button class="btn-action-quick custom" id="quickCustomBtn">
             <span>✏️ 自定义</span>
-            <span style="font-size:9px;opacity:0.8;">展开</span>
-          </button>
-          <button class="btn-action-quick rest" id="quickRestBtn">
-            <span>☕ 休息</span>
-            <span style="font-size:9px;opacity:0.8;">休班</span>
+            <span style="font-size:10px;opacity:0.8;">展开</span>
           </button>
         </div>
+
+        <!-- 自定义输入区 -->
         <div id="customInputsArea">
           <div class="form-group"><label>工时 (小时)</label><input type="number" step="0.5" inputmode="decimal" id="inputHours" /></div>
           <div class="form-group"><label>时薪 (元/小时)</label><input type="number" step="0.5" inputmode="decimal" id="inputRate" /></div>
           <div class="form-group"><label>补贴 (元)</label><input type="number" step="1" inputmode="decimal" id="inputSubsidy" /></div>
         </div>
+
+        <!-- ✅ 大号休息卡片 -->
+        <button class="btn-rest-large" id="quickRestBtn">
+          <div class="rest-icon">☕</div>
+          <div class="rest-info">
+            <div class="rest-title">休息打卡</div>
+            <div class="rest-sub">标记当天休息，不计工时和收入</div>
+          </div>
+        </button>
+
         <div class="modal-actions">
           <button class="btn-cancel" id="deleteBtn" style="color:#ef4444;">清除记录</button>
           <button class="btn-cancel" data-close="actionModal">取消</button>
@@ -587,7 +632,7 @@
   (function () {
     'use strict';
     
-    // ================= 主题初始化 =================
+    // 主题初始化
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
@@ -605,7 +650,6 @@
     let curDateStr = '';
     let currentPage = 'calendarPage';
 
-    // 2026 年法定节假日调休字典
     const holidayData = {
       '2026-01-01': 'holiday', '2026-01-02': 'holiday', '2026-01-03': 'holiday',
       '2026-02-14': 'workday', 
@@ -653,7 +697,6 @@
         cell.className = `day-cell ${isOther ? 'other-month' : ''} ${ds === todayStr ? 'today' : ''}`;
         cell.dataset.date = ds;
 
-        // 1. 获取农历信息
         let lunarText = '';
         let isTraditionalFestival = false;
         try {
@@ -670,7 +713,6 @@
           }
         } catch (e) {}
 
-        // 2. 节假日/调休判断
         const status = holidayData[ds];
         if (status === 'holiday' || isTraditionalFestival) {
           cell.classList.add('is-holiday');
@@ -678,7 +720,6 @@
           cell.classList.add('is-workday');
         }
 
-        // 3. 渲染 HTML
         let html = '';
         if (ds === todayStr) html += `<div class="today-badge">今</div>`;
         if (status === 'holiday') html += `<div class="badge-rest">休</div>`;
@@ -691,7 +732,6 @@
           if (log.type === 'rest') {
             html += `<div class="work-badge rest">休</div>`;
           } else if (log.hours > 0) {
-            // 统计（休息不参与工时统计）
             tHours += log.hours;
             tIncome += log.hours * log.rate + (log.subsidy || 0);
             tSubsidy += (log.subsidy || 0);
@@ -717,7 +757,6 @@
       $('totalSubsidy').textContent = tSubsidy;
     }
 
-    // 一键复制邮箱
     $('copyEmailBtn').addEventListener('click', () => {
       const email = $('emailText').innerText.trim();
       if (navigator.clipboard) {
@@ -741,13 +780,19 @@
       }
     });
 
+    // 打开打卡弹窗
     $('daysGrid').addEventListener('click', e => {
       const cell = e.target.closest('.day-cell');
       if (!cell) return;
       curDateStr = cell.dataset.date;
       const log = logs[curDateStr] || {};
       
-      $('actionModalTitle').textContent = `${curDateStr} 打卡`;
+      // 解析日期，填入大号日期框
+      const d = new Date(curDateStr);
+      const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+      $('modalDateDay').textContent = d.getDate();
+      $('modalDateMonth').textContent = `${d.getMonth() + 1}月 · ${weekdays[d.getDay()]}`;
+
       $('quickDayDesc').textContent = `${dayCfg.hours}h`;
       $('quickNightDesc').textContent = `${nightCfg.hours}h`;
 
@@ -802,7 +847,7 @@
       $('inputHours').focus();
     });
 
-    // 休息打卡
+    // 大卡片休息打卡
     $('quickRestBtn').addEventListener('click', () => {
       logs[curDateStr] = { type: 'rest', hours: 0, rate: 0, subsidy: 0 };
       localStorage.setItem('workLogs', JSON.stringify(logs));
@@ -844,7 +889,6 @@
     $('prevMonthBtn').addEventListener('click', () => { viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} renderCalendar(); });
     $('nextMonthBtn').addEventListener('click', () => { viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} renderCalendar(); });
 
-    // 导航切换
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -864,7 +908,6 @@
       });
     });
 
-    // 右上角动态按钮
     $('headerActionBtn').addEventListener('click', () => {
       if (currentPage === 'calendarPage') {
         $('defDayHours').value = dayCfg.hours;
@@ -875,7 +918,6 @@
         $('defNightRate').value = nightCfg.rate;
         $('defNightSubsidy').value = nightCfg.subsidy;
         
-        // 回显主题开关状态
         $('themeToggle').checked = document.documentElement.getAttribute('data-theme') === 'dark';
         
         $('settingsModal').classList.add('active');
@@ -884,12 +926,10 @@
       }
     });
 
-    // 深色模式切换事件
     $('themeToggle').addEventListener('change', (e) => {
       const theme = e.target.checked ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
-      // 稍微改一下状态栏主题色
       document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#0f172a' : '#fbfbf9');
     });
 
