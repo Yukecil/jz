@@ -27,8 +27,6 @@
       --color-holiday: #ef4444;
       --color-workday: #94a3b8;
       --color-today: #3b82f6;
-      --glass-bg: rgba(255, 255, 255, 0.45);
-      --glass-border: rgba(255, 255, 255, 0.7);
     }
 
     [data-theme="dark"] {
@@ -43,8 +41,6 @@
       --color-holiday: #f87171;
       --color-workday: #64748b;
       --color-today: #60a5fa;
-      --glass-bg: rgba(30, 41, 59, 0.45);
-      --glass-border: rgba(255, 255, 255, 0.1);
     }
 
     * {
@@ -110,9 +106,9 @@
     .app-name { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--primary); }
     .app-sub { font-size: 10px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
 
-    /* ✅ 修复了看不清的设置按钮 */
+    /* 修复了看不清的设置按钮 */
     .header-action-btn {
-      background: #ffffff; /* 浅色模式纯白底 */
+      background: #ffffff;
       border: 1px solid #e2e8f0;
       color: #475569;
       padding: 8px 14px;
@@ -124,8 +120,8 @@
       transition: all 0.2s;
     }
     [data-theme="dark"] .header-action-btn {
-      background: var(--glass-bg);
-      border-color: var(--glass-border);
+      background: rgba(30, 41, 59, 0.6);
+      border-color: #334155;
       color: var(--text-main);
     }
     .header-action-btn:active { transform: scale(0.95); }
@@ -301,12 +297,26 @@
     .work-badge.day { background: #fef3c7; color: #d97706; }
     .work-badge.night { background: #e0e7ff; color: #4338ca; }
     .work-badge.custom { background: #d1fae5; color: #047857; }
-    .work-badge.rest { background: #e5e7eb; color: #6b7280; }
+
+    /* ✅ 核心修改：将图2日历里的“休”改成大卡片 */
+    .work-badge.rest { 
+      background: #e2e8f0; 
+      color: #475569; 
+      font-size: 12px;
+      height: 26px; /* 撑满大半格子 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      margin-top: 4px;
+      width: 95%;
+      letter-spacing: 2px;
+    }
 
     [data-theme="dark"] .work-badge.day { background: rgba(217, 119, 6, 0.2); color: #fcd34d; }
     [data-theme="dark"] .work-badge.night { background: rgba(67, 56, 202, 0.3); color: #a5b4fc; }
     [data-theme="dark"] .work-badge.custom { background: rgba(4, 120, 87, 0.3); color: #6ee7b7; }
-    [data-theme="dark"] .work-badge.rest { background: rgba(107, 114, 128, 0.3); color: #d1d5db; }
+    [data-theme="dark"] .work-badge.rest { background: #334155; color: #cbd5e1; }
 
     .income-text { font-size: 8px; color: #f97316; font-weight: 800; margin-top: 1px; }
 
@@ -346,14 +356,12 @@
     .modal.active { display: flex; }
     .modal-content { background: var(--bg-card); width: 100%; max-width: 350px; border-radius: 28px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: 90vh; overflow-y: auto; transition: background 0.3s; }
     
-    /* 顶部大号日期 */
-    .modal-date-wrapper { text-align: center; margin-bottom: 20px; }
-    .modal-date-day { font-size: 36px; font-weight: 900; color: var(--text-main); line-height: 1; letter-spacing: -1px; }
-    .modal-date-month { font-size: 13px; color: var(--text-sub); margin-top: 6px; font-weight: 600; }
+    /* ✅ 恢复正常的弹窗标题 */
+    .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; text-align: center; color: var(--text-main); }
 
-    /* 三个快捷按钮 */
+    /* 快捷按钮 */
     .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-    .btn-action-quick { padding: 14px 6px; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-input); font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all 0.15s; }
+    .btn-action-quick { padding: 12px 6px; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-input); font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all 0.15s; }
     .btn-action-quick:active { transform: scale(0.94); }
     .btn-action-quick.day { background: #fffbeb; border-color: #fde68a; color: #b45309; }
     .btn-action-quick.night { background: #eef2ff; border-color: #c7d2fe; color: #3730a3; }
@@ -363,29 +371,28 @@
     [data-theme="dark"] .btn-action-quick.night { background: rgba(67, 56, 202, 0.2); border-color: #312e81; color: #a5b4fc; }
     [data-theme="dark"] .btn-action-quick.custom { background: rgba(4, 120, 87, 0.2); border-color: #064e3b; color: #6ee7b7; }
 
-    /* ✅ 大号休息卡片 */
-    .btn-rest-large {
+    /* ✅ 图1中的休息打卡变成了适中大小的按钮 */
+    .btn-rest-medium {
       width: 100%;
-      display: flex;
-      align-items: center;
-      padding: 16px;
-      border-radius: 18px;
+      padding: 12px;
+      border-radius: 14px;
       border: 1px dashed #cbd5e1;
       background: #f8fafc;
+      color: #475569;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       margin-bottom: 10px;
       cursor: pointer;
-      text-align: left;
       transition: all 0.2s;
     }
-    .btn-rest-large:active { transform: scale(0.97); background: #f1f5f9; }
-    .rest-icon { font-size: 28px; margin-right: 14px; }
-    .rest-title { font-size: 15px; font-weight: 800; color: #334155; margin-bottom: 3px; }
-    .rest-sub { font-size: 11px; color: #94a3b8; }
+    .btn-rest-medium:active { transform: scale(0.96); background: #f1f5f9; }
     
-    [data-theme="dark"] .btn-rest-large { border-color: #475569; background: rgba(30, 41, 59, 0.5); }
-    [data-theme="dark"] .btn-rest-large:active { background: rgba(30, 41, 59, 0.8); }
-    [data-theme="dark"] .rest-title { color: #e2e8f0; }
-    [data-theme="dark"] .rest-sub { color: #64748b; }
+    [data-theme="dark"] .btn-rest-medium { border-color: #475569; background: rgba(30, 41, 59, 0.5); color: #e2e8f0; }
+    [data-theme="dark"] .btn-rest-medium:active { background: rgba(30, 41, 59, 0.8); }
 
     /* 自定义输入区 */
     #customInputsArea { display: none; margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border-color); margin-bottom: 10px; }
@@ -512,15 +519,10 @@
       <div class="nav-item" data-target="aboutPage">关于</div>
     </div>
 
-    <!-- ✅ 改版后的打卡弹窗 -->
+    <!-- 恢复正常大小的打卡弹窗 -->
     <div class="modal" id="actionModal">
       <div class="modal-content">
-        
-        <!-- 大号日期 -->
-        <div class="modal-date-wrapper">
-          <div class="modal-date-day" id="modalDateDay">9</div>
-          <div class="modal-date-month" id="modalDateMonth">11月 · 星期日</div>
-        </div>
+        <div class="modal-title" id="actionModalTitle">每日打卡</div>
 
         <!-- 三个小快捷按钮 -->
         <div class="action-grid">
@@ -545,13 +547,9 @@
           <div class="form-group"><label>补贴 (元)</label><input type="number" step="1" inputmode="decimal" id="inputSubsidy" /></div>
         </div>
 
-        <!-- ✅ 大号休息卡片 -->
-        <button class="btn-rest-large" id="quickRestBtn">
-          <div class="rest-icon">☕</div>
-          <div class="rest-info">
-            <div class="rest-title">休息打卡</div>
-            <div class="rest-sub">标记当天休息，不计工时和收入</div>
-          </div>
+        <!-- 适中大小的休息打卡 -->
+        <button class="btn-rest-medium" id="quickRestBtn">
+          ☕ 休息打卡
         </button>
 
         <div class="modal-actions">
@@ -632,7 +630,6 @@
   (function () {
     'use strict';
     
-    // 主题初始化
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
@@ -730,6 +727,7 @@
 
         if (!isOther && log) {
           if (log.type === 'rest') {
+            // 这里渲染超大号的“休”卡片
             html += `<div class="work-badge rest">休</div>`;
           } else if (log.hours > 0) {
             tHours += log.hours;
@@ -780,19 +778,14 @@
       }
     });
 
-    // 打开打卡弹窗
+    // 打开打卡弹窗，恢复正常的标题
     $('daysGrid').addEventListener('click', e => {
       const cell = e.target.closest('.day-cell');
       if (!cell) return;
       curDateStr = cell.dataset.date;
       const log = logs[curDateStr] || {};
       
-      // 解析日期，填入大号日期框
-      const d = new Date(curDateStr);
-      const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-      $('modalDateDay').textContent = d.getDate();
-      $('modalDateMonth').textContent = `${d.getMonth() + 1}月 · ${weekdays[d.getDay()]}`;
-
+      $('actionModalTitle').textContent = `${curDateStr} 打卡`;
       $('quickDayDesc').textContent = `${dayCfg.hours}h`;
       $('quickNightDesc').textContent = `${nightCfg.hours}h`;
 
@@ -847,7 +840,7 @@
       $('inputHours').focus();
     });
 
-    // 大卡片休息打卡
+    // 适中大小的休息打卡
     $('quickRestBtn').addEventListener('click', () => {
       logs[curDateStr] = { type: 'rest', hours: 0, rate: 0, subsidy: 0 };
       localStorage.setItem('workLogs', JSON.stringify(logs));
