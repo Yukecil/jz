@@ -9,10 +9,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="HeyYu" />
   
-  <!-- 你提供的图床直链图标 -->
+  <!-- 图标直链 -->
   <link rel="apple-touch-icon" sizes="180x180" href="https://a1.ax1x.com/2026/11/09/wPJ6X.jpg" />
   
-  <title>HeyYu 工时小账本</title>
+  <title>HeyYu</title>
   <style>
     :root {
       --bg-base: #fbfbf9;
@@ -66,6 +66,7 @@
     .top-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 16px 20px 10px;
     }
     .app-title {
@@ -99,6 +100,24 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-top: 2px;
+    }
+
+    /* 动态按钮（主页显示设置，关于页显示教程） */
+    .header-action-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: all 0.2s;
+    }
+    .header-action-btn:active {
+      background: #fafafa;
+      transform: scale(0.95);
     }
 
     /* 顶部汇总卡片 */
@@ -228,9 +247,18 @@
       font-weight: 800;
     }
 
-    /* 统计页 */
-    .page-section { display: none; padding: 0 16px; }
+    /* 页面通用 */
+    .page-section { 
+      display: none; 
+      padding: 0 16px 20px;
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .page-section::-webkit-scrollbar { display: none; }
     .page-section.active { display: block; }
+
     .stats-card-box {
       background: #ffffff;
       border-radius: 24px;
@@ -239,61 +267,47 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
       margin-bottom: 16px;
     }
-    .year-selector {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-    .year-selector button {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid var(--border-color);
-      background: #fafafa;
-      color: var(--text-main);
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .year-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .year-stat-item {
-      padding: 16px;
-      border-radius: 16px;
-      background: #fafafa;
-      border: 1px solid var(--border-color);
-      text-align: center;
-    }
-    .year-stat-num {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--primary);
-    }
-    .year-stat-label {
-      font-size: 12px;
-      color: var(--text-sub);
-      margin-top: 6px;
-      font-weight: 600;
-    }
 
-    .settings-btn {
-      width: 100%;
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid var(--primary);
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
+    /* 关于页面 */
+    .about-header {
       text-align: center;
-      transition: all 0.2s;
+      padding: 10px 0 20px;
     }
-    .settings-btn:active { background: #d1fae5; }
+    .about-header .app-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 12px;
+      border-radius: 22px;
+      box-shadow: 0 8px 20px rgba(103, 194, 161, 0.2);
+    }
+    .about-header .app-logo svg { width: 44px; height: 44px; }
+    .about-header h2 { font-size: 22px; color: var(--primary); font-weight: 900; }
+    .about-header p { font-size: 12px; color: var(--text-sub); margin-top: 4px; }
+
+    /* 反馈卡片 */
+    .feedback-box {
+      background: #fafafa;
+      border: 1px dashed var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .feedback-box .icon { font-size: 28px; margin-bottom: 8px; }
+    .feedback-box h4 { font-size: 15px; color: var(--text-main); margin-bottom: 8px; }
+    .feedback-box p { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 16px; }
+    
+    .email-display {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 12px;
+      user-select: all;
+    }
 
     /* 底部导航 */
     .bottom-nav {
@@ -323,7 +337,7 @@
       box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3);
     }
 
-    /* 弹窗 (极简白底防卡顿) */
+    /* 弹窗 */
     .modal {
       display: none;
       position: fixed;
@@ -381,15 +395,13 @@
     .btn-action-quick.night { background: #eef2ff; border-color: #c7d2fe; color: #3730a3; }
     .btn-action-quick.custom { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
 
-    /* 隐藏/显示的输入区域 */
     #customInputsArea {
-      display: none; /* 默认隐藏 */
+      display: none;
       margin-top: 10px;
       padding-top: 16px;
       border-top: 1px dashed var(--border-color);
     }
 
-    /* 输入框 iOS 防放大 16px */
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
     .form-group input {
@@ -433,6 +445,33 @@
     .btn-cancel { background: #f0f0f0; color: var(--text-sub); }
     .btn-save { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3); }
 
+    /* 教程弹窗专属样式 */
+    .guide-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text {
+      font-size: 14px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
     .toast {
       position: fixed;
       left: 50%; bottom: 84px;
@@ -454,6 +493,8 @@
 <body>
 
   <div class="app-container">
+    
+    <!-- 顶栏 -->
     <div class="top-header">
       <div class="app-title">
         <div class="app-logo">
@@ -471,6 +512,8 @@
           <div class="app-sub">Work Log</div>
         </div>
       </div>
+      <!-- 动态按钮：在主页显示设置，在关于页显示教程 -->
+      <button class="header-action-btn" id="headerActionBtn">⚙️ 设置</button>
     </div>
 
     <!-- 主页/日历 -->
@@ -495,26 +538,55 @@
       </div>
     </div>
 
-    <!-- 统计页 -->
-    <div id="statsPage" class="page-section">
-      <div class="stats-card-box">
-        <div class="year-selector">
-          <button id="prevYearBtn">&lt;</button>
-          <span id="currentYearTitle" style="font-weight:800; font-size:16px; color:var(--primary);">—</span>
-          <button id="nextYearBtn">&gt;</button>
+    <!-- 关于与反馈页面 -->
+    <div id="aboutPage" class="page-section">
+      
+      <div class="about-header">
+        <div class="app-logo">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#67c2a1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 27 L9 9 L27 19 Z" fill="#a8e6cf"/>
+            <path d="M50 27 L55 9 L37 19 Z" fill="#a8e6cf"/>
+            <ellipse cx="32" cy="37" rx="20" ry="17.5" fill="#e6f6f0"/>
+            <ellipse cx="25" cy="35" rx="3" ry="4" fill="#67c2a1" stroke="none"/>
+            <ellipse cx="39" cy="35" rx="3" ry="4" fill="#67c2a1" stroke="none"/>
+            <path d="M28 43 Q32 45 36 43" stroke="#67c2a1"/>
+          </svg>
         </div>
-        <div class="year-stats-grid">
-          <div class="year-stat-item"><div class="year-stat-num"><span id="yearTotalHours">0</span>h</div><div class="year-stat-label">年度总工时</div></div>
-          <div class="year-stat-item"><div class="year-stat-num" style="color:#f59e0b;">¥<span id="yearTotalIncome">0</span></div><div class="year-stat-label">年度总收入</div></div>
+        <h2>HeyYu</h2>
+        <p>Version 2.0.0 · 极简工时小账本</p>
+      </div>
+
+      <div class="stats-card-box" style="text-align: center; padding: 24px 20px;">
+        <p style="font-size: 14px; color: var(--text-main); line-height: 1.6;">
+          欢迎使用 HeyYu！<br>
+          这是一款纯前端、完全离线的轻量级记账工具<br>
+          你的每一次打卡，都在为你的人生积攒底气
+        </p>
+      </div>
+
+      <div class="stats-card-box">
+        <div class="feedback-box">
+          <div class="icon">💌</div>
+          <h4>反馈 Bug 与 优化建议</h4>
+          <p>如果在使用中遇到任何问题，<br>或者有好的功能建议，欢迎随时联系我！</p>
+          
+          <div class="email-display" id="emailText">
+            <!-- ⚠️ 请在这里换成你自己的邮箱地址 -->
+            poormanxy@icloud.com
+          </div>
+          
+          <button class="btn-save" id="copyEmailBtn" style="width: 100%; padding: 12px; font-size: 14px;">
+            📋 一键复制邮箱
+          </button>
         </div>
       </div>
-      <button class="settings-btn" id="openSettingsBtn">⚙️ 默认参数与数据管理</button>
+
     </div>
 
     <!-- 底部导航 -->
     <div class="bottom-nav">
       <div class="nav-item active" data-target="calendarPage">主页</div>
-      <div class="nav-item" data-target="statsPage">统计</div>
+      <div class="nav-item" data-target="aboutPage">关于</div>
     </div>
 
     <!-- 打卡弹窗 -->
@@ -522,7 +594,6 @@
       <div class="modal-content">
         <div class="modal-title" id="actionModalTitle">每日打卡</div>
         
-        <!-- 快捷打卡按钮 -->
         <div class="action-grid">
           <button class="btn-action-quick day" id="quickDayBtn">
             <span>☀️ 白班</span>
@@ -538,7 +609,6 @@
           </button>
         </div>
 
-        <!-- 自定义输入区域（默认隐藏） -->
         <div id="customInputsArea">
           <div class="form-group"><label>工时 (小时)</label><input type="number" step="0.5" inputmode="decimal" id="inputHours" /></div>
           <div class="form-group"><label>时薪 (元/小时)</label><input type="number" step="0.5" inputmode="decimal" id="inputRate" /></div>
@@ -575,6 +645,38 @@
         </div>
       </div>
     </div>
+
+    <!-- 教程弹窗 -->
+    <div class="modal" id="tutorialModal">
+      <div class="modal-content">
+        <div class="modal-title">📱 添加到苹果主屏幕</div>
+        
+        <div class="guide-step">
+          <div class="step-num">1</div>
+          <div class="step-text">请务必使用 <strong>Safari 浏览器</strong> 打开本网页（微信等 App 内无法添加）。</div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-num">2</div>
+          <div class="step-text">点击屏幕底部中间的 <strong>分享按钮</strong> <span style="display:inline-block; border:1px solid #ccc; padding:0 4px; border-radius:4px; font-size:12px;">⬆️</span>（方框带向上箭头）。</div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-num">3</div>
+          <div class="step-text">在弹出的菜单中向下滑动，找到并点击 <strong>“添加到主屏幕”</strong> ➕。</div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-num">4</div>
+          <div class="step-text">点击右上角的 <strong>“添加”</strong>，即可在桌面像原生 App 一样使用。</div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-save" data-close="tutorialModal">我知道了</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="toast" id="toast"></div>
@@ -594,6 +696,7 @@
     let viewYear = now.getFullYear();
     let viewMonth = now.getMonth();
     let curDateStr = '';
+    let currentPage = 'calendarPage';
 
     function toast(msg) {
       const t = $('toast');
@@ -661,23 +764,30 @@
       $('totalSubsidy').textContent = tSubsidy;
     }
 
-    function renderStats() {
-      $('currentYearTitle').textContent = `${viewYear}年`;
-      let yHours = 0, yIncome = 0;
-      Object.keys(logs).forEach(ds => {
-        if (ds.startsWith(String(viewYear))) {
-          const l = logs[ds];
-          if (l && l.hours > 0) {
-            yHours += l.hours;
-            yIncome += l.hours * l.rate + (l.subsidy || 0);
-          }
+    // 一键复制邮箱功能
+    $('copyEmailBtn').addEventListener('click', () => {
+      const email = $('emailText').innerText.trim();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(email).then(() => {
+          toast('邮箱已复制，欢迎反馈！');
+        }).catch(() => {
+          toast('复制失败，请手动长按选中复制');
+        });
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = email;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          toast('邮箱已复制，欢迎反馈！');
+        } catch (err) {
+          toast('复制失败，请手动长按选中复制');
         }
-      });
-      $('yearTotalHours').textContent = yHours;
-      $('yearTotalIncome').textContent = yIncome;
-    }
+        document.body.removeChild(textArea);
+      }
+    });
 
-    // 点击日历格子打开弹窗
     $('daysGrid').addEventListener('click', e => {
       const cell = e.target.closest('.day-cell');
       if (!cell) return;
@@ -688,20 +798,16 @@
       $('quickDayDesc').textContent = `${dayCfg.hours}h`;
       $('quickNightDesc').textContent = `${nightCfg.hours}h`;
 
-      // 重置自定义输入区域的显示状态
       $('customInputsArea').style.display = 'none';
 
       if (log.hours > 0) {
-        // 如果有现有记录
         $('inputHours').value = log.hours;
         $('inputRate').value = log.rate;
         $('inputSubsidy').value = log.subsidy || '';
-        // 如果是自定义记录，自动展开输入框
         if (log.type === 'custom') {
           $('customInputsArea').style.display = 'block';
         }
       } else {
-        // 没有记录，预填默认白班数据备用
         $('inputHours').value = dayCfg.hours;
         $('inputRate').value = dayCfg.rate;
         $('inputSubsidy').value = dayCfg.subsidy || '';
@@ -710,7 +816,6 @@
       $('actionModal').classList.add('active');
     });
 
-    // 点击白班按钮：直接保存
     $('quickDayBtn').addEventListener('click', () => {
       $('inputHours').value = dayCfg.hours;
       $('inputRate').value = dayCfg.rate;
@@ -718,7 +823,6 @@
       saveLog('day');
     });
 
-    // 点击夜班按钮：直接保存
     $('quickNightBtn').addEventListener('click', () => {
       $('inputHours').value = nightCfg.hours;
       $('inputRate').value = nightCfg.rate;
@@ -726,10 +830,8 @@
       saveLog('night');
     });
 
-    // 点击自定义按钮：展开输入区域
     $('quickCustomBtn').addEventListener('click', () => {
       const log = logs[curDateStr];
-      // 如果当前记录是白班/夜班，点击自定义时，把当前参数带过来方便修改
       if (log && log.type !== 'custom' && log.hours > 0) {
         $('inputHours').value = log.hours;
         $('inputRate').value = log.rate;
@@ -757,12 +859,10 @@
       toast('打卡成功');
     }
 
-    // 底部保存按钮：默认保存为自定义
     $('saveBtn').addEventListener('click', () => {
       saveLog('custom');
     });
 
-    // 清除记录
     $('deleteBtn').addEventListener('click', () => {
       delete logs[curDateStr];
       localStorage.setItem('workLogs', JSON.stringify(logs));
@@ -774,31 +874,43 @@
     $('prevMonthBtn').addEventListener('click', () => { viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} renderCalendar(); });
     $('nextMonthBtn').addEventListener('click', () => { viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} renderCalendar(); });
 
-    $('prevYearBtn').addEventListener('click', () => { viewYear--; renderStats(); });
-    $('nextYearBtn').addEventListener('click', () => { viewYear++; renderStats(); });
-
+    // 导航切换（同时切换右上角按钮的功能和文字）
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
         item.classList.add('active');
+        
         const target = item.dataset.target;
+        currentPage = target;
         $(target).classList.add('active');
-        if (target === 'statsPage') renderStats();
-        else renderCalendar();
+        
+        if (target === 'calendarPage') {
+          renderCalendar();
+          $('headerActionBtn').innerHTML = '⚙️ 设置';
+        } else if (target === 'aboutPage') {
+          $('headerActionBtn').innerHTML = '📱 教程';
+        }
       });
     });
 
-    $('openSettingsBtn').addEventListener('click', () => {
-      $('defDayHours').value = dayCfg.hours;
-      $('defDayRate').value = dayCfg.rate;
-      $('defDaySubsidy').value = dayCfg.subsidy;
-      
-      $('defNightHours').value = nightCfg.hours;
-      $('defNightRate').value = nightCfg.rate;
-      $('defNightSubsidy').value = nightCfg.subsidy;
-      
-      $('settingsModal').classList.add('active');
+    // 右上角按钮点击事件（判断当前在哪个页面）
+    $('headerActionBtn').addEventListener('click', () => {
+      if (currentPage === 'calendarPage') {
+        // 打开设置弹窗
+        $('defDayHours').value = dayCfg.hours;
+        $('defDayRate').value = dayCfg.rate;
+        $('defDaySubsidy').value = dayCfg.subsidy;
+        
+        $('defNightHours').value = nightCfg.hours;
+        $('defNightRate').value = nightCfg.rate;
+        $('defNightSubsidy').value = nightCfg.subsidy;
+        
+        $('settingsModal').classList.add('active');
+      } else {
+        // 打开教程弹窗
+        $('tutorialModal').classList.add('active');
+      }
     });
 
     $('saveSettings').addEventListener('click', () => {
