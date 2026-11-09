@@ -106,7 +106,6 @@
     .app-name { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--primary); }
     .app-sub { font-size: 10px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
 
-    /* 修复了看不清的设置按钮 */
     .header-action-btn {
       background: #ffffff;
       border: 1px solid #e2e8f0;
@@ -222,7 +221,12 @@
       transition: transform 0.1s, background 0.2s;
     }
     .day-cell:active { transform: scale(0.92); }
-    .day-cell.other-month { opacity: 0.3; }
+    
+    /* ✅ 非本月日期直接留空，不可点击 */
+    .day-cell.other-month { 
+      pointer-events: none; 
+      background: transparent;
+    }
     
     /* 公历数字 */
     .solar-num {
@@ -298,12 +302,12 @@
     .work-badge.night { background: #e0e7ff; color: #4338ca; }
     .work-badge.custom { background: #d1fae5; color: #047857; }
 
-    /* ✅ 核心修改：将图2日历里的“休”改成大卡片 */
+    /* 大号“休”卡片 */
     .work-badge.rest { 
       background: #e2e8f0; 
       color: #475569; 
       font-size: 12px;
-      height: 26px; /* 撑满大半格子 */
+      height: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -355,8 +359,6 @@
     .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
     .modal.active { display: flex; }
     .modal-content { background: var(--bg-card); width: 100%; max-width: 350px; border-radius: 28px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: 90vh; overflow-y: auto; transition: background 0.3s; }
-    
-    /* ✅ 恢复正常的弹窗标题 */
     .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; text-align: center; color: var(--text-main); }
 
     /* 快捷按钮 */
@@ -371,7 +373,7 @@
     [data-theme="dark"] .btn-action-quick.night { background: rgba(67, 56, 202, 0.2); border-color: #312e81; color: #a5b4fc; }
     [data-theme="dark"] .btn-action-quick.custom { background: rgba(4, 120, 87, 0.2); border-color: #064e3b; color: #6ee7b7; }
 
-    /* ✅ 图1中的休息打卡变成了适中大小的按钮 */
+    /* 适中大小的休息打卡 */
     .btn-rest-medium {
       width: 100%;
       padding: 12px;
@@ -504,7 +506,7 @@
           <p>如果在使用中遇到任何问题，<br>或者有好的功能建议，欢迎随时联系我！</p>
           <div class="email-display" id="emailText">
             <!-- ⚠️ 请在这里换成你自己的邮箱地址 -->
-            your-email@example.com
+            poormanxy@icloud.com
           </div>
           <button class="btn-save" id="copyEmailBtn" style="width: 100%; padding: 12px; font-size: 14px;">
             📋 一键复制邮箱
@@ -519,12 +521,12 @@
       <div class="nav-item" data-target="aboutPage">关于</div>
     </div>
 
-    <!-- 恢复正常大小的打卡弹窗 -->
+    <!-- 打卡弹窗 -->
     <div class="modal" id="actionModal">
       <div class="modal-content">
         <div class="modal-title" id="actionModalTitle">每日打卡</div>
 
-        <!-- 三个小快捷按钮 -->
+        <!-- 快捷按钮 -->
         <div class="action-grid">
           <button class="btn-action-quick day" id="quickDayBtn">
             <span>☀️ 白班</span>
@@ -547,7 +549,7 @@
           <div class="form-group"><label>补贴 (元)</label><input type="number" step="1" inputmode="decimal" id="inputSubsidy" /></div>
         </div>
 
-        <!-- 适中大小的休息打卡 -->
+        <!-- 休息打卡 -->
         <button class="btn-rest-medium" id="quickRestBtn">
           ☕ 休息打卡
         </button>
@@ -691,7 +693,15 @@
         const log = logs[ds];
 
         const cell = document.createElement('div');
-        cell.className = `day-cell ${isOther ? 'other-month' : ''} ${ds === todayStr ? 'today' : ''}`;
+        
+        // ✅ 关键修改：如果是上个月或下个月的日期，直接留空不显示内容
+        if (isOther) {
+          cell.className = 'day-cell other-month';
+          frag.appendChild(cell);
+          continue;
+        }
+
+        cell.className = `day-cell ${ds === todayStr ? 'today' : ''}`;
         cell.dataset.date = ds;
 
         let lunarText = '';
@@ -725,9 +735,8 @@
         html += `<div class="solar-num">${d.getDate()}</div>`;
         html += `<div class="lunar-text">${lunarText}</div>`;
 
-        if (!isOther && log) {
+        if (log) {
           if (log.type === 'rest') {
-            // 这里渲染超大号的“休”卡片
             html += `<div class="work-badge rest">休</div>`;
           } else if (log.hours > 0) {
             tHours += log.hours;
@@ -778,10 +787,11 @@
       }
     });
 
-    // 打开打卡弹窗，恢复正常的标题
+    // ✅ 拦截非本月日期的点击
     $('daysGrid').addEventListener('click', e => {
       const cell = e.target.closest('.day-cell');
-      if (!cell) return;
+      if (!cell || cell.classList.contains('other-month')) return;
+      
       curDateStr = cell.dataset.date;
       const log = logs[curDateStr] || {};
       
@@ -840,7 +850,6 @@
       $('inputHours').focus();
     });
 
-    // 适中大小的休息打卡
     $('quickRestBtn').addEventListener('click', () => {
       logs[curDateStr] = { type: 'rest', hours: 0, rate: 0, subsidy: 0 };
       localStorage.setItem('workLogs', JSON.stringify(logs));
