@@ -20,14 +20,33 @@
     :root {
       --bg-base: #fbfbf9;
       --bg-card: #ffffff;
+      --bg-input: #fafafa;
       --border-color: #f0f0f0;
       --primary: #67c2a1;
       --primary-light: #e6f6f0;
       --text-main: #333333;
       --text-sub: #999999;
-      --color-holiday: #ef4444; /* 法定节假日红色 */
-      --color-workday: #94a3b8; /* 调休灰色 */
-      --color-today: #3b82f6; /* 今天蓝色 */
+      --color-holiday: #ef4444;
+      --color-workday: #94a3b8;
+      --color-today: #3b82f6;
+      --glass-bg: rgba(255, 255, 255, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.7);
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #0f172a;
+      --bg-card: #1e293b;
+      --bg-input: #0f172a;
+      --border-color: #334155;
+      --primary: #34d399;
+      --primary-light: rgba(52, 211, 153, 0.15);
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+      --color-holiday: #f87171;
+      --color-workday: #64748b;
+      --color-today: #60a5fa;
+      --glass-bg: rgba(30, 41, 59, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.1);
     }
 
     * {
@@ -49,6 +68,13 @@
         radial-gradient(circle at 10% 10%, rgba(103, 194, 161, 0.08) 0%, transparent 40%),
         radial-gradient(circle at 90% 90%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
       overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    [data-theme="dark"] body {
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(52, 211, 153, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(251, 191, 36, 0.1) 0%, transparent 40%);
     }
 
     .app-container {
@@ -57,6 +83,7 @@
       display: flex;
       flex-direction: column;
       background: var(--bg-base);
+      transition: background 0.3s;
     }
 
     .top-header {
@@ -65,7 +92,6 @@
       justify-content: space-between;
       padding: 16px 20px 10px;
       padding-top: calc(16px + env(safe-area-inset-top));
-      background: var(--bg-base);
       flex-shrink: 0;
     }
     .app-title {
@@ -86,19 +112,22 @@
     .app-name { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--primary); }
     .app-sub { font-size: 10px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
 
+    /* 毛玻璃按钮 */
     .header-action-btn {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       color: var(--text-main);
       padding: 8px 14px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
       transition: all 0.2s;
     }
-    .header-action-btn:active { background: #fafafa; transform: scale(0.95); }
+    .header-action-btn:active { transform: scale(0.95); }
 
     .page-section { 
       display: none; 
@@ -112,6 +141,7 @@
     .page-section::-webkit-scrollbar { display: none; }
     .page-section.active { display: flex; }
 
+    /* 顶部汇总卡片 */
     .dashboard-card {
       margin: 4px 0 16px;
       background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
@@ -120,7 +150,17 @@
       color: #2f4f4f;
       box-shadow: 0 8px 20px rgba(168, 230, 207, 0.3);
       flex-shrink: 0;
+      transition: background 0.3s;
     }
+    [data-theme="dark"] .dashboard-card {
+      background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+      color: #ecfdf5;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    [data-theme="dark"] .dashboard-card .stat-label { color: rgba(236, 253, 245, 0.8); }
+    [data-theme="dark"] .dashboard-card .stat-value { color: #fff; }
+    [data-theme="dark"] .dashboard-card .stat-value.income { color: #fbbf24; }
+
     .date-selector { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
     .month-nav {
       background: rgba(255, 255, 255, 0.6);
@@ -131,6 +171,7 @@
       cursor: pointer; font-size: 14px; font-weight: bold;
       transition: all 0.2s;
     }
+    [data-theme="dark"] .month-nav { background: rgba(0, 0, 0, 0.2); color: #ecfdf5; }
     .month-nav:active { background: rgba(255, 255, 255, 0.9); }
     .range-text { flex: 1; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
 
@@ -142,7 +183,7 @@
 
     /* 日历卡片区域 */
     .calendar-card {
-      background: #ffffff;
+      background: var(--bg-card);
       border-radius: 24px;
       padding: 12px 6px;
       border: 1px solid var(--border-color);
@@ -150,6 +191,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      transition: background 0.3s, border-color 0.3s;
     }
     .week-header {
       display: grid;
@@ -206,22 +248,18 @@
     /* 休息/班 标识 */
     .badge-rest {
       position: absolute;
-      top: 4px;
-      right: 2px;
-      font-size: 8px;
-      font-weight: 800;
+      top: 4px; right: 2px;
+      font-size: 8px; font-weight: 800;
       color: var(--color-holiday);
     }
     .badge-work {
       position: absolute;
-      top: 4px;
-      right: 2px;
-      font-size: 8px;
-      font-weight: 800;
+      top: 4px; right: 2px;
+      font-size: 8px; font-weight: 800;
       color: var(--color-workday);
     }
 
-    /* 颜色状态控制：只有法定节假日标红，普通周末不标红 */
+    /* 颜色状态控制 */
     .day-cell.is-holiday .solar-num, .day-cell.is-holiday .lunar-text { color: var(--color-holiday); }
     .day-cell.is-workday .solar-num, .day-cell.is-workday .lunar-text { color: var(--color-workday); }
 
@@ -230,6 +268,7 @@
       border: 1.5px solid var(--color-today);
       background: #eff6ff;
     }
+    [data-theme="dark"] .day-cell.today { background: rgba(59, 130, 246, 0.2); }
     .day-cell.today .solar-num,
     .day-cell.today .lunar-text { color: var(--color-today); }
     
@@ -245,7 +284,7 @@
       border-radius: 0 10px 0 6px;
     }
 
-    /* 糖果色打卡标签 */
+    /* 打卡标签 */
     .work-badge {
       font-size: 8px;
       font-weight: 800;
@@ -261,25 +300,32 @@
     .work-badge.day { background: #fef3c7; color: #d97706; }
     .work-badge.night { background: #e0e7ff; color: #4338ca; }
     .work-badge.custom { background: #d1fae5; color: #047857; }
+    .work-badge.rest { background: #e5e7eb; color: #6b7280; }
+
+    [data-theme="dark"] .work-badge.day { background: rgba(217, 119, 6, 0.2); color: #fcd34d; }
+    [data-theme="dark"] .work-badge.night { background: rgba(67, 56, 202, 0.3); color: #a5b4fc; }
+    [data-theme="dark"] .work-badge.custom { background: rgba(4, 120, 87, 0.3); color: #6ee7b7; }
+    [data-theme="dark"] .work-badge.rest { background: rgba(107, 114, 128, 0.3); color: #d1d5db; }
 
     .income-text { font-size: 8px; color: #f97316; font-weight: 800; margin-top: 1px; }
 
     /* 关于页面 */
     .stats-card-box {
-      background: #ffffff; border-radius: 24px; padding: 20px;
+      background: var(--bg-card); border-radius: 24px; padding: 20px;
       border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
       margin-bottom: 16px; flex-shrink: 0;
+      transition: background 0.3s, border-color 0.3s;
     }
     .about-header { text-align: center; padding: 10px 0 20px; flex-shrink: 0; }
     .about-header .app-logo { width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 22px; box-shadow: 0 8px 20px rgba(103, 194, 161, 0.2); }
     .about-header .app-logo svg { width: 44px; height: 44px; }
     .about-header h2 { font-size: 22px; color: var(--primary); font-weight: 900; }
     .about-header p { font-size: 12px; color: var(--text-sub); margin-top: 4px; }
-    .feedback-box { background: #fafafa; border: 1px dashed var(--border-color); border-radius: 16px; padding: 20px; text-align: center; }
+    .feedback-box { background: var(--bg-input); border: 1px dashed var(--border-color); border-radius: 16px; padding: 20px; text-align: center; transition: background 0.3s; }
     .feedback-box .icon { font-size: 28px; margin-bottom: 8px; }
     .feedback-box h4 { font-size: 15px; color: var(--text-main); margin-bottom: 8px; }
     .feedback-box p { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 16px; }
-    .email-display { background: #fff; border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 12px; user-select: all; }
+    .email-display { background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 12px; user-select: all; }
 
     /* 底部导航 */
     .bottom-nav {
@@ -288,36 +334,58 @@
       background: rgba(255, 255, 255, 0.98);
       border-top: 1px solid var(--border-color);
       display: flex; justify-content: space-around; align-items: center; z-index: 10; flex-shrink: 0;
+      transition: background 0.3s, border-color 0.3s;
     }
+    [data-theme="dark"] .bottom-nav { background: rgba(30, 41, 59, 0.98); }
     .nav-item { font-size: 14px; font-weight: 800; color: var(--text-sub); cursor: pointer; padding: 8px 36px; border-radius: 999px; transition: all 0.2s; }
     .nav-item.active { color: #ffffff; background: var(--primary); box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3); }
 
     /* 弹窗样式 */
     .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
     .modal.active { display: flex; }
-    .modal-content { background: #ffffff; width: 100%; max-width: 350px; border-radius: 28px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: 90vh; overflow-y: auto; }
+    .modal-content { background: var(--bg-card); width: 100%; max-width: 350px; border-radius: 28px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: 90vh; overflow-y: auto; transition: background 0.3s; }
     .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; text-align: center; color: var(--text-main); }
-    .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-    .btn-action-quick { padding: 12px 6px; border-radius: 16px; border: 1px solid var(--border-color); background: #fafafa; font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all 0.15s; }
+    
+    /* 四个快捷按钮 */
+    .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
+    .btn-action-quick { padding: 12px 2px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--bg-input); font-size: 11px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.15s; }
     .btn-action-quick:active { transform: scale(0.94); }
     .btn-action-quick.day { background: #fffbeb; border-color: #fde68a; color: #b45309; }
     .btn-action-quick.night { background: #eef2ff; border-color: #c7d2fe; color: #3730a3; }
     .btn-action-quick.custom { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+    .btn-action-quick.rest { background: #f3f4f6; border-color: #d1d5db; color: #4b5563; }
+    
+    [data-theme="dark"] .btn-action-quick.day { background: rgba(217, 119, 6, 0.2); border-color: #78350f; color: #fcd34d; }
+    [data-theme="dark"] .btn-action-quick.night { background: rgba(67, 56, 202, 0.2); border-color: #312e81; color: #a5b4fc; }
+    [data-theme="dark"] .btn-action-quick.custom { background: rgba(4, 120, 87, 0.2); border-color: #064e3b; color: #6ee7b7; }
+    [data-theme="dark"] .btn-action-quick.rest { background: rgba(107, 114, 128, 0.2); border-color: #374151; color: #d1d5db; }
+
     #customInputsArea { display: none; margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border-color); }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
-    .form-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 14px; font-size: 16px; outline: none; background: #fafafa; color: var(--text-main); -webkit-appearance: none; transition: border-color 0.2s; }
-    .form-group input:focus { border-color: var(--primary); background: #fff; }
+    .form-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 14px; font-size: 16px; outline: none; background: var(--bg-input); color: var(--text-main); -webkit-appearance: none; transition: all 0.2s; }
+    .form-group input:focus { border-color: var(--primary); }
     .backup-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; margin-bottom: 8px; }
-    .btn-backup { padding: 12px; border: 1px solid var(--border-color); border-radius: 14px; background: #fafafa; font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; }
-    .btn-backup:active { background: #f0f0f0; }
+    .btn-backup { padding: 12px; border: 1px solid var(--border-color); border-radius: 14px; background: var(--bg-input); font-size: 13px; font-weight: 700; color: var(--text-main); cursor: pointer; text-align: center; }
+    .btn-backup:active { background: var(--border-color); }
     .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
     .modal-actions button { flex: 1; padding: 12px; border: none; border-radius: 14px; font-size: 14px; font-weight: bold; cursor: pointer; }
-    .btn-cancel { background: #f0f0f0; color: var(--text-sub); }
+    .btn-cancel { background: var(--bg-input); color: var(--text-sub); border: 1px solid var(--border-color); }
     .btn-save { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3); }
+    
+    /* 教程样式 */
     .guide-step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
     .step-num { width: 24px; height: 24px; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; flex-shrink: 0; margin-top: 1px; }
     .step-text { font-size: 14px; color: var(--text-main); line-height: 1.5; }
+
+    /* 深色模式 Switch 样式 */
+    .switch { position: relative; display: inline-block; width: 51px; height: 31px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 27px; width: 27px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    input:checked + .slider { background-color: var(--primary); }
+    input:checked + .slider:before { transform: translateX(20px); }
+
     .toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); background: rgba(51, 51, 51, 0.9); color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 200; }
     .toast.show { opacity: 1; }
   </style>
@@ -381,7 +449,7 @@
           </svg>
         </div>
         <h2>HeyYu</h2>
-        <p>Version 2.1.0 · 极简工时小账本</p>
+        <p>Version 2.2.0 · 极简工时小账本</p>
       </div>
 
       <div class="stats-card-box" style="text-align: center; padding: 24px 20px;">
@@ -421,15 +489,19 @@
         <div class="action-grid">
           <button class="btn-action-quick day" id="quickDayBtn">
             <span>☀️ 白班</span>
-            <span style="font-size:10px;opacity:0.8;" id="quickDayDesc">8h</span>
+            <span style="font-size:9px;opacity:0.8;" id="quickDayDesc">8h</span>
           </button>
           <button class="btn-action-quick night" id="quickNightBtn">
             <span>🌙 夜班</span>
-            <span style="font-size:10px;opacity:0.8;" id="quickNightDesc">8h</span>
+            <span style="font-size:9px;opacity:0.8;" id="quickNightDesc">8h</span>
           </button>
           <button class="btn-action-quick custom" id="quickCustomBtn">
             <span>✏️ 自定义</span>
-            <span style="font-size:10px;opacity:0.8;">展开填写</span>
+            <span style="font-size:9px;opacity:0.8;">展开</span>
+          </button>
+          <button class="btn-action-quick rest" id="quickRestBtn">
+            <span>☕ 休息</span>
+            <span style="font-size:9px;opacity:0.8;">休班</span>
           </button>
         </div>
         <div id="customInputsArea">
@@ -448,7 +520,20 @@
     <!-- 设置与备份弹窗 -->
     <div class="modal" id="settingsModal">
       <div class="modal-content">
-        <div class="modal-title">默认参数与备份</div>
+        <div class="modal-title">设置与备份</div>
+        
+        <!-- 深色模式开关 -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border-color);">
+          <div>
+            <div style="font-size: 14px; font-weight: bold; color: var(--text-main);">深色模式</div>
+            <div style="font-size: 11px; color: var(--text-sub); margin-top: 2px;">切换夜间护眼模式</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+
         <div class="form-group"><label>☀️ 白班默认工时</label><input type="number" step="0.5" inputmode="decimal" id="defDayHours" /></div>
         <div class="form-group"><label>☀️ 白班时薪 & 补贴</label><div style="display:flex;gap:10px;"><input type="number" step="0.5" inputmode="decimal" id="defDayRate" placeholder="时薪" /><input type="number" step="1" inputmode="decimal" id="defDaySubsidy" placeholder="补贴" /></div></div>
         
@@ -478,7 +563,7 @@
         </div>
         <div class="guide-step">
           <div class="step-num">2</div>
-          <div class="step-text">点击屏幕底部中间的 <strong>分享按钮</strong> <span style="display:inline-block; border:1px solid #ccc; padding:0 4px; border-radius:4px; font-size:12px;">⬆️</span>（方框带向上箭头）。</div>
+          <div class="step-text">点击屏幕底部中间的 <strong>分享按钮</strong> <span style="display:inline-block; border:1px solid var(--border-color); padding:0 4px; border-radius:4px; font-size:12px;">⬆️</span>（方框带向上箭头）。</div>
         </div>
         <div class="guide-step">
           <div class="step-num">3</div>
@@ -501,6 +586,11 @@
   <script>
   (function () {
     'use strict';
+    
+    // ================= 主题初始化 =================
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
     const $ = id => document.getElementById(id);
     const pad = n => String(n).padStart(2, '0');
     const fmtDate = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
@@ -515,9 +605,8 @@
     let curDateStr = '';
     let currentPage = 'calendarPage';
 
-    // 2026 年及部分已知法定节假日调休字典
+    // 2026 年法定节假日调休字典
     const holidayData = {
-      // 2026 年法定节假日
       '2026-01-01': 'holiday', '2026-01-02': 'holiday', '2026-01-03': 'holiday',
       '2026-02-14': 'workday', 
       '2026-02-15': 'holiday', '2026-02-16': 'holiday', '2026-02-17': 'holiday', '2026-02-18': 'holiday', '2026-02-19': 'holiday', '2026-02-20': 'holiday', '2026-02-21': 'holiday', '2026-02-22': 'holiday',
@@ -560,44 +649,36 @@
         const isOther = d.getMonth() !== viewMonth;
         const log = logs[ds];
 
-        if (!isOther && log && log.hours > 0) {
-          tHours += log.hours;
-          tIncome += log.hours * log.rate + (log.subsidy || 0);
-          tSubsidy += (log.subsidy || 0);
-          tDays++;
-        }
-
         const cell = document.createElement('div');
         cell.className = `day-cell ${isOther ? 'other-month' : ''} ${ds === todayStr ? 'today' : ''}`;
         cell.dataset.date = ds;
 
-        // 1. 获取农历、节气、节日信息
+        // 1. 获取农历信息
         let lunarText = '';
+        let isTraditionalFestival = false;
         try {
           const lunar = Lunar.fromDate(d);
           const jq = lunar.getJieQi();
           const festivals = lunar.getFestivals();
-          
           if (festivals.length > 0) {
-            lunarText = festivals[0]; // 优先显示传统节日（如：春节、中秋）
+            lunarText = festivals[0];
+            isTraditionalFestival = true;
           } else if (jq) {
-            lunarText = jq; // 其次显示节气（如：立冬）
+            lunarText = jq;
           } else {
             lunarText = lunar.getDayInChinese() === '初一' ? lunar.getMonthInChinese() + '月' : lunar.getDayInChinese();
           }
-        } catch (e) {
-          lunarText = ''; // 如果库没加载出来则留空
-        }
+        } catch (e) {}
 
-        // 2. 判断节假日调休（去掉周末标红）
+        // 2. 节假日/调休判断
         const status = holidayData[ds];
-        if (status === 'holiday') {
+        if (status === 'holiday' || isTraditionalFestival) {
           cell.classList.add('is-holiday');
         } else if (status === 'workday') {
           cell.classList.add('is-workday');
         }
 
-        // 3. 拼接 HTML
+        // 3. 渲染 HTML
         let html = '';
         if (ds === todayStr) html += `<div class="today-badge">今</div>`;
         if (status === 'holiday') html += `<div class="badge-rest">休</div>`;
@@ -606,11 +687,21 @@
         html += `<div class="solar-num">${d.getDate()}</div>`;
         html += `<div class="lunar-text">${lunarText}</div>`;
 
-        if (!isOther && log && log.hours > 0) {
-          const typeClass = log.type || 'custom';
-          const prefix = typeClass === 'day' ? '白' : typeClass === 'night' ? '夜' : '';
-          html += `<div class="work-badge ${typeClass}">${prefix}${log.hours}h</div>`;
-          html += `<div class="income-text">¥${log.hours*log.rate+(log.subsidy||0)}</div>`;
+        if (!isOther && log) {
+          if (log.type === 'rest') {
+            html += `<div class="work-badge rest">休</div>`;
+          } else if (log.hours > 0) {
+            // 统计（休息不参与工时统计）
+            tHours += log.hours;
+            tIncome += log.hours * log.rate + (log.subsidy || 0);
+            tSubsidy += (log.subsidy || 0);
+            tDays++;
+            
+            const typeClass = log.type || 'custom';
+            const prefix = typeClass === 'day' ? '白' : typeClass === 'night' ? '夜' : '';
+            html += `<div class="work-badge ${typeClass}">${prefix}${log.hours}h</div>`;
+            html += `<div class="income-text">¥${log.hours*log.rate+(log.subsidy||0)}</div>`;
+          }
         }
         
         cell.innerHTML = html;
@@ -626,7 +717,7 @@
       $('totalSubsidy').textContent = tSubsidy;
     }
 
-    // 一键复制邮箱功能
+    // 一键复制邮箱
     $('copyEmailBtn').addEventListener('click', () => {
       const email = $('emailText').innerText.trim();
       if (navigator.clipboard) {
@@ -662,7 +753,11 @@
 
       $('customInputsArea').style.display = 'none';
 
-      if (log.hours > 0) {
+      if (log.type === 'rest') {
+        $('inputHours').value = 0;
+        $('inputRate').value = 0;
+        $('inputSubsidy').value = 0;
+      } else if (log.hours > 0) {
         $('inputHours').value = log.hours;
         $('inputRate').value = log.rate;
         $('inputSubsidy').value = log.subsidy || '';
@@ -698,9 +793,22 @@
         $('inputHours').value = log.hours;
         $('inputRate').value = log.rate;
         $('inputSubsidy').value = log.subsidy || '';
+      } else if (log && log.type === 'rest') {
+        $('inputHours').value = '';
+        $('inputRate').value = dayCfg.rate;
+        $('inputSubsidy').value = '';
       }
       $('customInputsArea').style.display = 'block';
       $('inputHours').focus();
+    });
+
+    // 休息打卡
+    $('quickRestBtn').addEventListener('click', () => {
+      logs[curDateStr] = { type: 'rest', hours: 0, rate: 0, subsidy: 0 };
+      localStorage.setItem('workLogs', JSON.stringify(logs));
+      $('actionModal').classList.remove('active');
+      renderCalendar();
+      toast('已标记为休息');
     });
 
     function saveLog(type) {
@@ -767,10 +875,22 @@
         $('defNightRate').value = nightCfg.rate;
         $('defNightSubsidy').value = nightCfg.subsidy;
         
+        // 回显主题开关状态
+        $('themeToggle').checked = document.documentElement.getAttribute('data-theme') === 'dark';
+        
         $('settingsModal').classList.add('active');
       } else {
         $('tutorialModal').classList.add('active');
       }
+    });
+
+    // 深色模式切换事件
+    $('themeToggle').addEventListener('change', (e) => {
+      const theme = e.target.checked ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      // 稍微改一下状态栏主题色
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#0f172a' : '#fbfbf9');
     });
 
     $('saveSettings').addEventListener('click', () => {
