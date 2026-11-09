@@ -3,31 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#34d399" />
+  
+  <meta name="theme-color" content="#fbfbf9" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="HeyYu" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <title>HeyYu</title>
+  
+  <!-- 你提供的图床直链图标 -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://a1.ax1x.com/2026/11/09/wPJ6X.jpg" />
+  
+  <title>HeyYu 工时小账本</title>
   <style>
     :root {
-      --bg-color: #f2f8f4;
-      --card-bg: #ffffff;
-      --primary-green: #2fb98a;
-      --primary-hover: #26a37a;
-      --header-bg: linear-gradient(135deg, #34d399 0%, #2dd4bf 55%, #22d3ee 100%);
-      --accent-badge: #e6f7f2;
-      --text-main: #2d3748;
-      --text-sub: #718096;
-      --border-color: #e2e8f0;
-      --income-color: #e65100;
+      --bg-base: #fbfbf9;
+      --bg-card: #ffffff;
+      --border-color: #f0f0f0;
+      --primary: #67c2a1;
+      --primary-light: #e6f6f0;
+      --accent-day: #fbbf24;
+      --accent-night: #8b5cf6;
+      --text-main: #333333;
+      --text-sub: #999999;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -36,40 +39,34 @@
       display: flex;
       justify-content: center;
       min-height: 100vh;
-      padding: 12px;
+      padding: 10px;
       touch-action: manipulation;
-      background:
-        radial-gradient(circle at 8% 8%, #dcfce7 0%, transparent 42%),
-        radial-gradient(circle at 92% 12%, #fef3c7 0%, transparent 38%),
-        radial-gradient(circle at 12% 92%, #e0f2fe 0%, transparent 42%),
-        radial-gradient(circle at 88% 96%, #fce7f3 0%, transparent 38%),
-        #f6faf7;
+      background: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(103, 194, 161, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
     }
 
     .app-container {
       width: 100%;
       max-width: 420px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
+      background: var(--bg-card);
+      border: 1px solid #f0f0f0;
       border-radius: 32px;
-      box-shadow:
-        0 22px 50px rgba(47, 185, 138, 0.16),
-        0 0 0 1px rgba(255, 255, 255, 0.9) inset,
-        0 0 0 4px rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      padding-bottom: calc(80px + env(safe-area-inset-bottom));
-      height: calc(100vh - 24px);
-      height: calc(100dvh - 24px);
+      padding-bottom: calc(76px + env(safe-area-inset-bottom));
+      height: calc(100vh - 20px);
+      height: calc(100dvh - 20px);
     }
 
     .top-header {
       display: flex;
-      justify-content: flex-start;
       align-items: center;
-      padding: 18px 20px 14px;
-      background: transparent;
+      padding: 16px 20px 10px;
     }
     .app-title {
       display: flex;
@@ -77,140 +74,98 @@
       gap: 12px;
     }
     .app-logo {
-      width: 46px;
-      height: 46px;
-      background: linear-gradient(135deg, #fef3c7 0%, #fbcfe8 50%, #ddd6fe 100%);
-      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      background: var(--primary-light);
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow:
-        0 6px 16px rgba(251, 191, 36, 0.35),
-        0 0 0 3px #fff inset,
-        0 0 0 1px rgba(255, 255, 255, 0.8);
-      animation: floaty 4s ease-in-out infinite;
-      flex-shrink: 0;
     }
     .app-logo svg {
-      width: 34px;
-      height: 34px;
+      width: 28px;
+      height: 28px;
       display: block;
     }
-    @keyframes floaty {
-      0%, 100% { transform: translateY(0) rotate(-3deg); }
-      50% { transform: translateY(-3px) rotate(3deg); }
-    }
     .app-name {
-      font-family: "STKaiti", "KaiTi", "Kaiti SC", "楷体", "Songti SC", "SimSun", serif;
-      font-size: 23px;
+      font-size: 20px;
       font-weight: 900;
-      letter-spacing: 2px;
-      line-height: 1.1;
-      background: linear-gradient(120deg, #047857 0%, #10b981 42%, #f59e0b 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 1px 1px rgba(16, 185, 129, 0.18));
+      letter-spacing: 1px;
+      color: var(--primary);
     }
     .app-sub {
-      font-size: 11px;
-      color: #9ca3af;
-      letter-spacing: 3px;
-      margin-top: 3px;
+      font-size: 10px;
+      color: var(--text-sub);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 2px;
     }
 
+    /* 顶部汇总卡片 */
     .dashboard-card {
-      margin: 4px 0 14px;
-      background: var(--header-bg);
-      border-radius: 26px;
-      padding: 18px 14px 16px;
-      color: #fff;
-      box-shadow:
-        0 14px 32px rgba(45, 212, 191, 0.32),
-        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-      position: relative;
-      overflow: hidden;
-    }
-    .dashboard-card::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      right: -25%;
-      width: 65%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.32), transparent 70%);
-      pointer-events: none;
+      margin: 4px 16px 16px;
+      background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+      border-radius: 24px;
+      padding: 18px 16px;
+      color: #2f4f4f;
+      box-shadow: 0 8px 20px rgba(168, 230, 207, 0.3);
     }
     .date-selector {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 16px;
-      position: relative;
-      z-index: 1;
     }
-    .date-selector .month-nav {
-      background: rgba(255, 255, 255, 0.28);
+    .month-nav {
+      background: rgba(255, 255, 255, 0.6);
       border: none;
-      color: #fff;
+      color: #2f4f4f;
       width: 32px;
       height: 32px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
-      flex-shrink: 0;
-      backdrop-filter: blur(4px);
-      transition: background 0.2s, transform 0.15s;
+      transition: all 0.2s;
     }
-    .date-selector .month-nav:active {
-      background: rgba(255, 255, 255, 0.5);
-      transform: scale(0.92);
-    }
+    .month-nav:active { background: rgba(255, 255, 255, 0.9); }
     .range-text {
       flex: 1;
       text-align: center;
       font-size: 16px;
       font-weight: 800;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       text-align: center;
-      position: relative;
-      z-index: 1;
-      gap: 2px;
+      gap: 4px;
     }
     .stat-label {
-      font-size: 10px;
-      opacity: 0.92;
-      margin-bottom: 3px;
-      letter-spacing: 0.3px;
-      white-space: nowrap;
+      font-size: 11px;
+      color: rgba(47, 79, 79, 0.7);
+      margin-bottom: 4px;
+      font-weight: 600;
     }
     .stat-value {
-      font-size: 15px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 900;
       white-space: nowrap;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-      line-height: 1.2;
+      color: #2f4f4f;
     }
-    .stat-unit {
-      font-size: 10px;
-      font-weight: normal;
-      opacity: 0.9;
-      margin-left: 1px;
-    }
+    .stat-value.income { color: #e67e22; }
+    .stat-unit { font-size: 10px; opacity: 0.7; }
 
+    /* 日历区域 */
     .calendar-card {
-      background: var(--card-bg);
+      margin: 0 16px;
+      background: #ffffff;
       border-radius: 24px;
-      padding: 16px 14px;
-      box-shadow: 0 8px 24px rgba(47, 185, 138, 0.08);
+      padding: 14px;
       border: 1px solid var(--border-color);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
     }
     .week-header {
       display: grid;
@@ -224,630 +179,265 @@
     .days-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
+      gap: 6px;
     }
     .day-cell {
-      aspect-ratio: 0.82;
-      border-radius: 14px;
-      border: 1px solid #edf2f7;
-      background: #fafbfc;
-      padding: 3px 2px;
+      aspect-ratio: 0.8;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: #fafafa;
+      padding: 4px 2px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      gap: 1px;
+      gap: 2px;
       cursor: pointer;
       position: relative;
-      overflow: hidden;
-      user-select: none;
-      transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
+      transition: transform 0.1s, background 0.2s;
     }
-    .day-cell:active {
-      transform: scale(0.93);
-    }
-    .day-cell:focus-visible {
-      outline: 2px solid var(--primary-green);
-      outline-offset: 1px;
-    }
-    .day-cell.other-month {
-      opacity: 0.28;
-      background: #f1f5f9;
-    }
+    .day-cell:active { transform: scale(0.92); }
+    .day-cell.other-month { opacity: 0.2; background: transparent; }
     .day-cell.today {
-      border: 2px solid transparent;
-      background:
-        linear-gradient(#f0fdf4, #f0fdf4) padding-box,
-        linear-gradient(135deg, #34d399, #22d3ee) border-box;
-      box-shadow: 0 4px 10px rgba(45, 212, 191, 0.22);
-    }
-    .day-cell.today::after {
-      content: "";
-      position: absolute;
-      top: 3px;
-      right: 3px;
-      width: 6px;
-      height: 6px;
-      background: linear-gradient(135deg, #f87171, #fb7185);
-      border-radius: 50%;
-      box-shadow: 0 0 0 2px #fff;
+      border: 1.5px solid var(--primary);
+      background: var(--primary-light);
     }
     .day-num {
       font-size: 12px;
       font-weight: 700;
       color: var(--text-main);
-      line-height: 1.2;
-      white-space: nowrap;
     }
+    .day-cell.today .day-num { color: var(--primary); }
+    
+    /* 糖果色打卡标签 */
     .work-badge {
       font-size: 9px;
       font-weight: 800;
-      border-radius: 7px;
+      border-radius: 6px;
       padding: 1px 0;
       width: 100%;
-      line-height: 1.35;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
-    .work-badge.day-shift {
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      color: #b45309;
-    }
-    .work-badge.night-shift {
-      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-      color: #4338ca;
-    }
-    .work-badge.custom-shift {
-      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-      color: #047857;
-    }
+    .work-badge.day { background: #fef3c7; color: #d97706; }
+    .work-badge.night { background: #e0e7ff; color: #4338ca; }
+    .work-badge.custom { background: #d1fae5; color: #047857; }
+
     .income-text {
-      font-size: 9px;
-      line-height: 1.2;
-      color: var(--income-color);
-      font-weight: 700;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-size: 8px;
+      color: #f97316;
+      font-weight: 800;
     }
 
-    .page-section {
-      display: none;
-      padding: 0 14px 4px;
-    }
-    .page-section.active {
-      display: block;
-    }
+    /* 统计页 */
+    .page-section { display: none; padding: 0 16px; }
+    .page-section.active { display: block; }
     .stats-card-box {
-      background: #fff;
+      background: #ffffff;
       border-radius: 24px;
-      padding: 18px;
+      padding: 20px;
       border: 1px solid var(--border-color);
-      box-shadow: 0 8px 24px rgba(47, 185, 138, 0.06);
-      margin-bottom: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+      margin-bottom: 16px;
     }
-    .stats-card-box:first-child {
-      margin-top: 4px;
-    }
-
-    .year-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .year-stat-item {
-      grid-column: span 2;
-      text-align: center;
-      padding: 14px 6px;
-      border-radius: 16px;
-      background: linear-gradient(160deg, #f0fdf4, #ffffff);
-      border: 1px solid #dcfce7;
-    }
-    .year-stat-item:nth-child(2) {
-      background: linear-gradient(160deg, #fffbeb, #ffffff);
-      border-color: #fde68a;
-    }
-    .year-stat-item:nth-child(3) {
-      background: linear-gradient(160deg, #eff6ff, #ffffff);
-      border-color: #bfdbfe;
-    }
-    .year-stat-item:nth-child(4),
-    .year-stat-item:nth-child(5) {
-      grid-column: span 3;
-    }
-    .year-stat-item:nth-child(4) {
-      background: linear-gradient(160deg, #fffbeb, #ffffff);
-      border-color: #fcd34d;
-    }
-    .year-stat-item:nth-child(5) {
-      background: linear-gradient(160deg, #eef2ff, #ffffff);
-      border-color: #a5b4fc;
-    }
-    .year-stat-num {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--primary-green);
-      white-space: nowrap;
-      line-height: 1.15;
-    }
-    .year-stat-unit {
-      font-size: 11px;
-      margin-left: 1px;
-      opacity: 0.7;
-    }
-    .year-stat-label {
-      font-size: 11px;
-      color: var(--text-sub);
-      margin-top: 5px;
-      font-weight: 600;
-    }
-
     .year-selector {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 16px;
-      margin-bottom: 6px;
+      margin-bottom: 20px;
     }
     .year-selector button {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       border: 1px solid var(--border-color);
-      background: linear-gradient(135deg, #f8fafc, #eef2f7);
-      color: #475569;
-      font-weight: bold;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    }
-    .year-selector button:active {
-      transform: scale(0.9);
-      background: #eef2f7;
-    }
-    .year-selector span {
-      font-size: 16px;
-      font-weight: 800;
-      color: #1f2937;
-      min-width: 84px;
-      text-align: center;
-    }
-
-    .month-glass {
-      position: relative;
-      overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(209, 250, 229, 0.55), rgba(224, 242, 254, 0.5) 45%, rgba(254, 243, 199, 0.45) 100%);
-      backdrop-filter: blur(18px) saturate(170%);
-      -webkit-backdrop-filter: blur(18px) saturate(170%);
-      border: 1px solid rgba(255, 255, 255, 0.78);
-      border-radius: 24px;
-      padding: 18px;
-      box-shadow:
-        0 10px 32px rgba(47, 185, 138, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95);
-      margin-bottom: 14px;
-    }
-    .month-glass::before {
-      content: "";
-      position: absolute;
-      top: -35%;
-      right: -20%;
-      width: 65%;
-      height: 85%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.7), transparent 70%);
-      pointer-events: none;
-    }
-    .month-glass h3 {
-      font-size: 15px;
-      font-weight: 800;
-      color: #1f2937;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      position: relative;
-      z-index: 1;
-    }
-    .month-enter-btn {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      padding: 16px;
-      border-radius: 18px;
-      border: 1.5px solid rgba(255, 255, 255, 0.85);
-      background: rgba(255, 255, 255, 0.65);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 4px 14px rgba(47, 185, 138, 0.12);
-      transition: transform 0.15s, background 0.2s;
-    }
-    .month-enter-btn:active {
-      transform: scale(0.97);
-      background: rgba(255, 255, 255, 0.9);
-    }
-    .month-enter-main {
-      font-size: 14px;
-      font-weight: 800;
-      color: #1f2937;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .month-enter-hint {
-      font-size: 11px;
-      color: var(--text-sub);
-      font-weight: 600;
-    }
-
-    .settings-entry-box {
-      background: #fff;
-      border-radius: 24px;
-      padding: 14px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 8px 24px rgba(47, 185, 138, 0.06);
-      margin-bottom: 14px;
-    }
-    .settings-entry-btn {
-      width: 100%;
-      padding: 14px;
-      border-radius: 18px;
-      border: 1.5px solid #bbf7d0;
-      background: linear-gradient(150deg, #f0fdf4, #dcfce7);
-      color: #166534;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.14);
-      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
-    }
-    .settings-entry-btn:active {
-      transform: scale(0.97);
-      background: linear-gradient(150deg, #dcfce7, #bbf7d0);
-      box-shadow: 0 2px 6px rgba(34, 197, 94, 0.18);
-    }
-
-    .month-picker-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    .month-pick-item {
-      padding: 14px 6px;
-      border-radius: 16px;
-      text-align: center;
-      background: linear-gradient(160deg, #f0fdf4, #ffffff);
-      border: 1px solid #dcfce7;
-      cursor: pointer;
-      outline: none;
-      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
-    }
-    .month-pick-item:hover {
-      background: linear-gradient(160deg, #dcfce7, #ffffff);
-    }
-    .month-pick-item:active {
-      transform: scale(0.94);
-    }
-    .month-pick-item:focus-visible {
-      box-shadow: 0 0 0 2px var(--primary-green);
-    }
-    .month-pick-item.empty {
-      background: linear-gradient(160deg, #f8fafc, #ffffff);
-      border-color: #e2e8f0;
-    }
-    .month-pick-item.current {
-      background:
-        linear-gradient(#ffffff, #ffffff) padding-box,
-        linear-gradient(135deg, #34d399, #22d3ee) border-box;
-      border: 1.5px solid transparent;
-      box-shadow: 0 4px 14px rgba(45, 212, 191, 0.28);
-    }
-    .month-pick-num {
-      font-size: 16px;
-      font-weight: 900;
-      color: #1f2937;
-      line-height: 1.2;
-    }
-    .month-pick-hours {
-      font-size: 11px;
-      color: var(--primary-green);
-      font-weight: 700;
-      margin-top: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .month-pick-item.empty .month-pick-num {
-      color: #94a3b8;
-    }
-    .month-pick-item.empty .month-pick-hours {
-      color: #cbd5e1;
-    }
-
-    .month-detail-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 4px;
-    }
-    .md-item {
-      padding: 12px 8px;
-      border-radius: 14px;
-      text-align: center;
-      background: linear-gradient(160deg, #f8fafc, #ffffff);
-      border: 1px solid var(--border-color);
-    }
-    .md-item.md-income {
-      grid-column: span 2;
-      background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
-      border-color: #a7f3d0;
-    }
-    .md-label {
-      font-size: 11px;
-      color: var(--text-sub);
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .md-value {
-      font-size: 18px;
-      font-weight: 900;
-      color: #1f2937;
-      white-space: nowrap;
-    }
-    .md-income .md-value {
-      color: #f59e0b;
-      font-size: 24px;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(17, 24, 39, 0.45);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      backdrop-filter: blur(2px);
-    }
-    .modal.active {
-      display: flex;
-      animation: fadeIn 0.18s ease-out;
-    }
-    .modal-content {
-      background: #fff;
-      width: 100%;
-      max-width: 380px;
-      max-height: 86vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 28px;
-      padding: 22px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
-      animation: popIn 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-    }
-    .modal-title {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 14px;
-      color: #1f2937;
-      text-align: center;
-    }
-    .modal-subtitle {
-      font-size: 11px;
-      color: var(--text-sub);
-      text-align: center;
-      margin-top: -8px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-    .current-log {
-      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-      border: 1px dashed #86efac;
-      color: #15803d;
-      font-size: 12px;
-      font-weight: 700;
-      border-radius: 14px;
-      padding: 9px 12px;
-      text-align: center;
-      margin-bottom: 14px;
-    }
-
-    .btn-grid-actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .btn-small-action {
-      padding: 14px 8px;
-      border-radius: 18px;
-      border: 1.5px solid var(--border-color);
-      background: #f8fafc;
-      font-size: 13px;
-      font-weight: 700;
+      background: #fafafa;
       color: var(--text-main);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      line-height: 1.3;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
-      transition: transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-small-action:active {
-      transform: scale(0.95) translateY(1px);
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-    }
-    .btn-small-action.day-btn {
-      background: linear-gradient(150deg, #fffbeb, #fef3c7);
-      border-color: #fcd34d;
-      color: #b45309;
-    }
-    .btn-small-action.night-btn {
-      background: linear-gradient(150deg, #eef2ff, #e0e7ff);
-      border-color: #a5b4fc;
-      color: #3730a3;
-    }
-    .btn-small-action.custom-btn {
-      background: linear-gradient(150deg, #f0fdf4, #d1fae5);
-      border-color: #86efac;
-      color: #15803d;
-    }
-    .btn-small-action.danger-btn {
-      background: linear-gradient(150deg, #fef2f2, #fee2e2);
-      border-color: #fca5a5;
-      color: #dc2626;
-    }
-    .btn-small-action.danger-btn.armed {
-      background: linear-gradient(150deg, #ef4444, #dc2626);
-      border-color: #dc2626;
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
-    }
-    .sub-info {
-      font-size: 10px;
-      font-weight: normal;
-      opacity: 0.85;
-    }
-
-    .form-group {
-      margin-bottom: 11px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-sub);
-      margin-bottom: 4px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 14px;
-      font-size: 14px;
-      outline: none;
-      background: #f9fafb;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-    }
-    .form-group input:focus {
-      border-color: var(--primary-green);
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(47, 185, 138, 0.12);
-    }
-    .form-section-title {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--primary-green);
-      margin: 14px 0 9px;
-      padding-bottom: 4px;
-      border-bottom: 1px dashed var(--border-color);
-    }
-    .form-section-title:first-of-type {
-      margin-top: 4px;
-    }
-
-    .data-actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .data-actions .btn-small-action {
-      padding: 11px 4px;
-      font-size: 12px;
-      border-radius: 14px;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .modal-actions button {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 14px;
-      font-size: 14px;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.15s, opacity 0.2s, box-shadow 0.2s;
     }
-    .modal-actions button:active {
-      transform: scale(0.96);
+    .year-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
-    .btn-cancel {
-      background: #f1f5f9;
-      color: #64748b;
+    .year-stat-item {
+      padding: 16px;
+      border-radius: 16px;
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      text-align: center;
     }
-    .btn-save {
-      background: linear-gradient(135deg, #34d399, #2dd4bf);
-      color: #fff;
-      box-shadow: 0 6px 16px rgba(45, 212, 191, 0.32);
+    .year-stat-num {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--primary);
     }
-    .btn-save:active {
-      box-shadow: 0 3px 8px rgba(45, 212, 191, 0.4);
+    .year-stat-label {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 6px;
+      font-weight: 600;
     }
 
+    .settings-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .settings-btn:active { background: #d1fae5; }
+
+    /* 底部导航 */
     .bottom-nav {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: calc(68px + env(safe-area-inset-bottom));
+      bottom: 0; left: 0; right: 0;
+      height: calc(66px + env(safe-area-inset-bottom));
       padding-bottom: env(safe-area-inset-bottom);
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
       align-items: center;
       z-index: 10;
-      padding-left: 24px;
-      padding-right: 24px;
     }
     .nav-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
-      color: #94a3b8;
+      color: var(--text-sub);
       cursor: pointer;
-      padding: 12px 32px;
+      padding: 8px 36px;
       border-radius: 999px;
-      transition: color 0.2s, background 0.25s, box-shadow 0.25s, transform 0.15s;
-    }
-    .nav-item:active {
-      transform: scale(0.95);
+      transition: all 0.2s;
     }
     .nav-item.active {
-      color: #fff;
-      background: linear-gradient(135deg, #34d399, #2dd4bf);
-      box-shadow: 0 6px 16px rgba(45, 212, 191, 0.38);
+      color: #ffffff;
+      background: var(--primary);
+      box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3);
     }
+
+    /* 弹窗 (极简白底防卡顿) */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 350px;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-align: center;
+      color: var(--text-main);
+    }
+
+    /* 快捷按钮 */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .btn-action-quick {
+      padding: 12px 6px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      background: #fafafa;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-action-quick:active { transform: scale(0.94); }
+    .btn-action-quick.day { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .btn-action-quick.night { background: #eef2ff; border-color: #c7d2fe; color: #3730a3; }
+    .btn-action-quick.custom { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+
+    /* 隐藏/显示的输入区域 */
+    #customInputsArea {
+      display: none; /* 默认隐藏 */
+      margin-top: 10px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    /* 输入框 iOS 防放大 16px */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      font-size: 16px;
+      outline: none;
+      background: #fafafa;
+      color: var(--text-main);
+      -webkit-appearance: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus { border-color: var(--primary); background: #fff; }
+
+    .backup-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .btn-backup {
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      background: #fafafa;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-backup:active { background: #f0f0f0; }
+
+    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-actions button {
+      flex: 1; padding: 12px; border: none; border-radius: 14px; font-size: 14px; font-weight: bold; cursor: pointer;
+    }
+    .btn-cancel { background: #f0f0f0; color: var(--text-sub); }
+    .btn-save { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(103, 194, 161, 0.3); }
 
     .toast {
       position: fixed;
-      left: 50%;
-      bottom: calc(96px + env(safe-area-inset-bottom));
-      transform: translate(-50%, 12px);
-      background: rgba(31, 41, 55, 0.94);
+      left: 50%; bottom: 84px;
+      transform: translateX(-50%);
+      background: rgba(51, 51, 51, 0.9);
       color: #fff;
       padding: 10px 20px;
       border-radius: 999px;
@@ -855,29 +445,10 @@
       font-weight: 600;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s, transform 0.25s;
+      transition: opacity 0.2s;
       z-index: 200;
-      max-width: 80vw;
-      text-align: center;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
     }
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.94) translateY(8px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -885,969 +456,420 @@
   <div class="app-container">
     <div class="top-header">
       <div class="app-title">
-        <div class="app-logo" aria-hidden="true">
-          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 27 L9 9 L27 19 Z" fill="#fbbf24" stroke="#1f2937" stroke-width="2.2" stroke-linejoin="round"/>
-            <path d="M50 27 L55 9 L37 19 Z" fill="#fbbf24" stroke="#1f2937" stroke-width="2.2" stroke-linejoin="round"/>
-            <path d="M16.5 23 L14 14.5 L22.5 19 Z" fill="#fda4af"/>
-            <path d="M47.5 23 L50 14.5 L41.5 19 Z" fill="#fda4af"/>
-            <ellipse cx="32" cy="37" rx="20" ry="17.5" fill="#fef3c7" stroke="#1f2937" stroke-width="2.2"/>
-            <ellipse cx="25" cy="35" rx="4.4" ry="5.4" fill="#1f2937"/>
-            <ellipse cx="39" cy="35" rx="4.4" ry="5.4" fill="#1f2937"/>
-            <circle cx="26.6" cy="33" r="1.8" fill="#fff"/>
-            <circle cx="40.6" cy="33" r="1.8" fill="#fff"/>
-            <ellipse cx="18.5" cy="43" rx="4" ry="2.4" fill="#fda4af" opacity="0.85"/>
-            <ellipse cx="45.5" cy="43" rx="4" ry="2.4" fill="#fda4af" opacity="0.85"/>
-            <path d="M29.5 39.5 Q32 41.5 34.5 39.5" stroke="#1f2937" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-            <path d="M32 41.5 Q30 45.5 27.8 43.4 M32 41.5 Q34 45.5 36.2 43.4" stroke="#1f2937" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <div class="app-logo">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#67c2a1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 27 L9 9 L27 19 Z" fill="#a8e6cf"/>
+            <path d="M50 27 L55 9 L37 19 Z" fill="#a8e6cf"/>
+            <ellipse cx="32" cy="37" rx="20" ry="17.5" fill="#e6f6f0"/>
+            <ellipse cx="25" cy="35" rx="3" ry="4" fill="#67c2a1" stroke="none"/>
+            <ellipse cx="39" cy="35" rx="3" ry="4" fill="#67c2a1" stroke="none"/>
+            <path d="M28 43 Q32 45 36 43" stroke="#67c2a1"/>
           </svg>
         </div>
         <div>
           <div class="app-name">HeyYu</div>
-          <div class="app-sub">工时小账本</div>
+          <div class="app-sub">Work Log</div>
         </div>
       </div>
     </div>
 
+    <!-- 主页/日历 -->
     <div id="calendarPage" class="page-section active">
       <div class="dashboard-card">
         <div class="date-selector">
-          <button class="month-nav" id="prevMonthBtn" aria-label="上个月">&lt;</button>
+          <button class="month-nav" id="prevMonthBtn">&lt;</button>
           <span class="range-text" id="monthRangeTitle">—</span>
-          <button class="month-nav" id="nextMonthBtn" aria-label="下个月">&gt;</button>
+          <button class="month-nav" id="nextMonthBtn">&gt;</button>
         </div>
-
         <div class="stats-grid">
-          <div>
-            <div class="stat-label">总工时</div>
-            <div class="stat-value"><span id="totalHours">0</span><span class="stat-unit">h</span></div>
-          </div>
-          <div>
-            <div class="stat-label">总收入</div>
-            <div class="stat-value">¥<span id="totalIncome">0</span></div>
-          </div>
-          <div>
-            <div class="stat-label">总天数</div>
-            <div class="stat-value"><span id="totalDays">0</span><span class="stat-unit">天</span></div>
-          </div>
-          <div>
-            <div class="stat-label">总补助</div>
-            <div class="stat-value">¥<span id="totalSubsidy">0</span></div>
-          </div>
+          <div><div class="stat-label">总工时</div><div class="stat-value"><span id="totalHours">0</span><span class="stat-unit">h</span></div></div>
+          <div><div class="stat-label">总收入</div><div class="stat-value income">¥<span id="totalIncome">0</span></div></div>
+          <div><div class="stat-label">出勤</div><div class="stat-value"><span id="totalDays">0</span><span class="stat-unit">天</span></div></div>
+          <div><div class="stat-label">补贴</div><div class="stat-value">¥<span id="totalSubsidy">0</span></div></div>
         </div>
       </div>
 
       <div class="calendar-card">
-        <div class="week-header">
-          <div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div>
-        </div>
+        <div class="week-header"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div></div>
         <div class="days-grid" id="daysGrid"></div>
       </div>
     </div>
 
+    <!-- 统计页 -->
     <div id="statsPage" class="page-section">
       <div class="stats-card-box">
         <div class="year-selector">
-          <button id="prevYearBtn" aria-label="上一年">&lt;</button>
-          <span id="currentYearTitle">—</span>
-          <button id="nextYearBtn" aria-label="下一年">&gt;</button>
+          <button id="prevYearBtn">&lt;</button>
+          <span id="currentYearTitle" style="font-weight:800; font-size:16px; color:var(--primary);">—</span>
+          <button id="nextYearBtn">&gt;</button>
         </div>
-
         <div class="year-stats-grid">
-          <div class="year-stat-item">
-            <div class="year-stat-num"><span id="yearTotalHours">0</span><span class="year-stat-unit">h</span></div>
-            <div class="year-stat-label">总工时</div>
-          </div>
-          <div class="year-stat-item">
-            <div class="year-stat-num" style="color:#f59e0b;">¥<span id="yearTotalIncome">0</span></div>
-            <div class="year-stat-label">总收入</div>
-          </div>
-          <div class="year-stat-item">
-            <div class="year-stat-num" style="color:#3b82f6;"><span id="yearTotalDays">0</span><span class="year-stat-unit">天</span></div>
-            <div class="year-stat-label">打卡天数</div>
-          </div>
-          <div class="year-stat-item">
-            <div class="year-stat-num" style="color:#d97706;"><span id="yearDayCount">0</span><span class="year-stat-unit">天</span></div>
-            <div class="year-stat-label">☀️ 白班</div>
-          </div>
-          <div class="year-stat-item">
-            <div class="year-stat-num" style="color:#4338ca;"><span id="yearNightCount">0</span><span class="year-stat-unit">天</span></div>
-            <div class="year-stat-label">🌙 夜班</div>
-          </div>
+          <div class="year-stat-item"><div class="year-stat-num"><span id="yearTotalHours">0</span>h</div><div class="year-stat-label">年度总工时</div></div>
+          <div class="year-stat-item"><div class="year-stat-num" style="color:#f59e0b;">¥<span id="yearTotalIncome">0</span></div><div class="year-stat-label">年度总收入</div></div>
         </div>
       </div>
-
-      <div class="month-glass">
-        <h3>🗓️ 各月明细</h3>
-        <button class="month-enter-btn" id="openMonthPickerBtn">
-          <span class="month-enter-main">📊 点击打开</span>
-          <span class="month-enter-hint">查看月份列表 →</span>
-        </button>
-      </div>
-
-      <div class="settings-entry-box">
-        <button class="settings-entry-btn" id="openSettingsBtn">
-          ⚙️ 默认设置 / 数据管理
-        </button>
-      </div>
+      <button class="settings-btn" id="openSettingsBtn">⚙️ 默认参数与数据管理</button>
     </div>
 
+    <!-- 底部导航 -->
     <div class="bottom-nav">
-      <div class="nav-item active" data-target="calendarPage">
-        <div>主页</div>
-      </div>
-      <div class="nav-item" data-target="statsPage">
-        <div>统计</div>
-      </div>
+      <div class="nav-item active" data-target="calendarPage">主页</div>
+      <div class="nav-item" data-target="statsPage">统计</div>
     </div>
 
+    <!-- 打卡弹窗 -->
     <div class="modal" id="actionModal">
       <div class="modal-content">
-        <div class="modal-title" id="actionModalTitle">选择打卡</div>
-        <div class="current-log" id="currentLogInfo" hidden></div>
-
-        <div class="btn-grid-actions">
-          <button class="btn-small-action day-btn" id="btnDayShift">
-            <span>☀️ 白班打卡</span>
-            <span class="sub-info" id="dayShiftSubText"></span>
+        <div class="modal-title" id="actionModalTitle">每日打卡</div>
+        
+        <!-- 快捷打卡按钮 -->
+        <div class="action-grid">
+          <button class="btn-action-quick day" id="quickDayBtn">
+            <span>☀️ 白班</span>
+            <span style="font-size:10px;opacity:0.8;" id="quickDayDesc">8h</span>
           </button>
-          <button class="btn-small-action night-btn" id="btnNightShift">
-            <span>🌙 夜班打卡</span>
-            <span class="sub-info" id="nightShiftSubText"></span>
+          <button class="btn-action-quick night" id="quickNightBtn">
+            <span>🌙 夜班</span>
+            <span style="font-size:10px;opacity:0.8;" id="quickNightDesc">8h</span>
           </button>
-          <button class="btn-small-action custom-btn" id="btnCustomShift">
-            <span>✏️ 自定义打卡</span>
-            <span class="sub-info">任意工时 / 薪资</span>
-          </button>
-          <button class="btn-small-action danger-btn" id="btnClearShift" hidden>
-            <span id="clearShiftText">🗑️ 清除打卡</span>
-            <span class="sub-info">删除本日记录</span>
+          <button class="btn-action-quick custom" id="quickCustomBtn">
+            <span>✏️ 自定义</span>
+            <span style="font-size:10px;opacity:0.8;">展开填写</span>
           </button>
         </div>
 
-        <button class="btn-small-action" style="width: 100%;" data-close="actionModal">取消</button>
-      </div>
-    </div>
-
-    <div class="modal" id="customModal">
-      <div class="modal-content">
-        <div class="modal-title" id="customModalTitle">自定义打卡</div>
-        <div class="form-group">
-          <label>当日工时（支持 0.5）</label>
-          <input type="number" step="0.5" min="0" inputmode="decimal" id="customHoursInput" placeholder="例如：8 或 10.5" />
+        <!-- 自定义输入区域（默认隐藏） -->
+        <div id="customInputsArea">
+          <div class="form-group"><label>工时 (小时)</label><input type="number" step="0.5" inputmode="decimal" id="inputHours" /></div>
+          <div class="form-group"><label>时薪 (元/小时)</label><input type="number" step="0.5" inputmode="decimal" id="inputRate" /></div>
+          <div class="form-group"><label>补贴 (元)</label><input type="number" step="1" inputmode="decimal" id="inputSubsidy" /></div>
         </div>
-        <div class="form-group">
-          <label>每小时薪资（元）</label>
-          <input type="number" step="0.5" min="0" inputmode="decimal" id="customRateInput" placeholder="例如：25" />
-        </div>
-        <div class="form-group">
-          <label>当日补贴（元）</label>
-          <input type="number" step="1" inputmode="decimal" id="customSubsidyInput" placeholder="例如：30" />
-        </div>
+        
         <div class="modal-actions">
-          <button class="btn-cancel" data-close="customModal">取消</button>
-          <button class="btn-save" id="saveCustomBtn">保存打卡</button>
+          <button class="btn-cancel" id="deleteBtn" style="color:#ef4444;">清除记录</button>
+          <button class="btn-cancel" data-close="actionModal">取消</button>
+          <button class="btn-save" id="saveBtn">保存</button>
         </div>
       </div>
     </div>
 
-    <div class="modal" id="monthPickerModal">
-      <div class="modal-content">
-        <div class="modal-title" id="monthPickerTitle">选择月份</div>
-        <div class="modal-subtitle" id="monthPickerSub">点击某个月查看详细数据</div>
-
-        <div class="month-picker-grid" id="monthPickerGrid"></div>
-
-        <div class="modal-actions">
-          <button class="btn-cancel" data-close="monthPickerModal">关闭</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="monthDetailModal">
-      <div class="modal-content">
-        <div class="modal-title" id="monthDetailTitle">月度详情</div>
-
-        <div class="month-detail-grid">
-          <div class="md-item md-income">
-            <div class="md-label">当月总收入</div>
-            <div class="md-value" id="mdIncome">¥0</div>
-          </div>
-          <div class="md-item">
-            <div class="md-label">总工时</div>
-            <div class="md-value" id="mdHours">0h</div>
-          </div>
-          <div class="md-item">
-            <div class="md-label">打卡天数</div>
-            <div class="md-value" id="mdDays">0天</div>
-          </div>
-          <div class="md-item">
-            <div class="md-label">☀️ 白班</div>
-            <div class="md-value" id="mdDayCount">0天</div>
-          </div>
-          <div class="md-item">
-            <div class="md-label">🌙 夜班</div>
-            <div class="md-value" id="mdNightCount">0天</div>
-          </div>
-          <div class="md-item">
-            <div class="md-label">✏️ 自定义</div>
-            <div class="md-value" id="mdCustomCount">0天</div>
-          </div>
-        </div>
-
-        <div class="modal-actions">
-          <button class="btn-cancel" data-close="monthDetailModal">关闭</button>
-          <button class="btn-save" id="gotoMonthBtn">查看该月打卡 →</button>
-        </div>
-      </div>
-    </div>
-
+    <!-- 设置与备份弹窗 -->
     <div class="modal" id="settingsModal">
       <div class="modal-content">
-        <div class="modal-title">默认白班 / 夜班参数</div>
+        <div class="modal-title">默认参数与备份</div>
+        <div class="form-group"><label>☀️ 白班默认工时</label><input type="number" step="0.5" inputmode="decimal" id="defDayHours" /></div>
+        <div class="form-group"><label>☀️ 白班时薪 & 补贴</label><div style="display:flex;gap:10px;"><input type="number" step="0.5" inputmode="decimal" id="defDayRate" placeholder="时薪" /><input type="number" step="1" inputmode="decimal" id="defDaySubsidy" placeholder="补贴" /></div></div>
+        
+        <div class="form-group" style="margin-top:16px;"><label>🌙 夜班默认工时</label><input type="number" step="0.5" inputmode="decimal" id="defNightHours" /></div>
+        <div class="form-group"><label>🌙 夜班时薪 & 补贴</label><div style="display:flex;gap:10px;"><input type="number" step="0.5" inputmode="decimal" id="defNightRate" placeholder="时薪" /><input type="number" step="1" inputmode="decimal" id="defNightSubsidy" placeholder="补贴" /></div></div>
+        
+        <div class="backup-actions">
+          <button class="btn-backup" id="exportBtn">📥 导出备份</button>
+          <button class="btn-backup" id="importBtn">📤 恢复数据</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json" hidden />
 
-        <div class="form-section-title">☀️ 默认白班</div>
-        <div class="form-group">
-          <label>工时（小时）</label>
-          <input type="number" step="0.5" min="0" inputmode="decimal" id="dayHoursInput" />
-        </div>
-        <div class="form-group">
-          <label>时薪（元/小时）</label>
-          <input type="number" step="0.5" min="0" inputmode="decimal" id="dayRateInput" />
-        </div>
-        <div class="form-group">
-          <label>补贴（元）</label>
-          <input type="number" step="1" inputmode="decimal" id="daySubsidyInput" />
-        </div>
-
-        <div class="form-section-title">🌙 默认夜班</div>
-        <div class="form-group">
-          <label>工时（小时）</label>
-          <input type="number" step="0.5" min="0" inputmode="decimal" id="nightHoursInput" />
-        </div>
-        <div class="form-group">
-          <label>时薪（元/小时）</label>
-          <input type="number" step="0.5" min="0" inputmode="decimal" id="nightRateInput" />
-        </div>
-        <div class="form-group">
-          <label>补贴（元）</label>
-          <input type="number" step="1" inputmode="decimal" id="nightSubsidyInput" />
-        </div>
-
-        <div class="form-section-title">💾 数据管理</div>
-        <div class="data-actions">
-          <button class="btn-small-action" id="exportBtn">⬇️ 导出</button>
-          <button class="btn-small-action" id="importBtn">⬆️ 导入</button>
-          <button class="btn-small-action danger-btn" id="clearAllBtn">🧹 清空</button>
-        </div>
-        <input type="file" id="importFile" accept="application/json,.json" hidden />
-
-        <div class="modal-actions">
-          <button class="btn-cancel" data-close="settingsModal">取消</button>
-          <button class="btn-save" id="saveSettingsBtn">保存默认</button>
+        <div class="modal-actions" style="margin-top:20px;">
+          <button class="btn-cancel" data-close="settingsModal">关闭</button>
+          <button class="btn-save" id="saveSettings">保存默认</button>
         </div>
       </div>
     </div>
-
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="toast" id="toast"></div>
 
   <script>
   (function () {
     'use strict';
+    const $ = id => document.getElementById(id);
+    const pad = n => String(n).padStart(2, '0');
+    const fmtDate = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
-    const KEY_LOGS = 'workLogs';
-    const KEY_DAY = 'dayShiftConfig';
-    const KEY_NIGHT = 'nightShiftConfig';
+    let logs = JSON.parse(localStorage.getItem('workLogs') || '{}');
+    let dayCfg = JSON.parse(localStorage.getItem('dayCfg') || '{"hours":8,"rate":25,"subsidy":0}');
+    let nightCfg = JSON.parse(localStorage.getItem('nightCfg') || '{"hours":8,"rate":30,"subsidy":20}');
+    
+    let now = new Date();
+    let viewYear = now.getFullYear();
+    let viewMonth = now.getMonth();
+    let curDateStr = '';
 
-    const DEFAULT_DAY = { hours: 8, rate: 25, subsidy: 0 };
-    const DEFAULT_NIGHT = { hours: 8, rate: 30, subsidy: 20 };
-
-    const $ = (id) => document.getElementById(id);
-    const pad2 = (n) => String(n).padStart(2, '0');
-    const fmtDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-
-    const cleanNum = (n) => {
-      const v = Number(n);
-      if (!Number.isFinite(v)) return 0;
-      return parseFloat(v.toFixed(10));
-    };
-
-    const toNum = (v, def = 0) => (Number.isFinite(Number(v)) ? Number(v) : def);
-    const fmtMoney = (n) =>
-      cleanNum(n).toLocaleString('zh-CN', { maximumFractionDigits: 10 });
-    const fmtHours = (n) => String(cleanNum(n));
-
-    const logIncome = (log) =>
-      (Number(log.hours) || 0) * (Number(log.rate) || 0) + (Number(log.subsidy) || 0);
-
-    function safeParse(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-        if (!raw) return fallback;
-        const val = JSON.parse(raw);
-        return val === null || val === undefined ? fallback : val;
-      } catch (e) {
-        console.warn('[小账本] 本地数据解析失败：', key, e);
-        return fallback;
-      }
-    }
-
-    function normalizeConfig(raw, def) {
-      if (!raw || typeof raw !== 'object') return Object.assign({}, def);
-      return {
-        hours: Math.max(0, toNum(raw.hours, def.hours)),
-        rate: Math.max(0, toNum(raw.rate, def.rate)),
-        subsidy: toNum(raw.subsidy, def.subsidy)
-      };
-    }
-
-    function sanitizeLogs(raw) {
-      const out = {};
-      if (!raw || typeof raw !== 'object') return out;
-      Object.keys(raw).forEach((key) => {
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return;
-        const l = raw[key];
-        if (!l || typeof l !== 'object') return;
-        const hours = Number(l.hours);
-        if (!Number.isFinite(hours) || hours <= 0) return;
-        out[key] = {
-          type: ['day', 'night', 'custom'].indexOf(l.type) > -1 ? l.type : 'custom',
-          hours: hours,
-          rate: Math.max(0, toNum(l.rate, 0)),
-          subsidy: toNum(l.subsidy, 0)
-        };
-      });
-      return out;
-    }
-
-    let dayShiftConfig = normalizeConfig(safeParse(KEY_DAY, null), DEFAULT_DAY);
-    let nightShiftConfig = normalizeConfig(safeParse(KEY_NIGHT, null), DEFAULT_NIGHT);
-    let workLogs = sanitizeLogs(safeParse(KEY_LOGS, {}));
-
-    function persistLogs() {
-      try {
-        localStorage.setItem(KEY_LOGS, JSON.stringify(workLogs));
-      } catch (e) {
-        toast('保存失败，存储空间可能已满');
-      }
-    }
-
-    const now = new Date();
-    const VIEW = { year: now.getFullYear(), month: now.getMonth() };
-    const STAT = { year: now.getFullYear() };
-    let selectedDateStr = '';
-    let monthDetailTarget = null;
-
-    let toastTimer = null;
     function toast(msg) {
-      const el = $('toast');
-      el.textContent = msg;
-      el.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove('show'), 1900);
+      const t = $('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 1600);
     }
 
     function renderCalendar() {
-      const y = VIEW.year;
-      const m = VIEW.month;
-
-      $('monthRangeTitle').textContent = `${y}年${m + 1}月`;
-
-      const firstDay = new Date(y, m, 1);
-      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      $('monthRangeTitle').textContent = `${viewYear}年${viewMonth + 1}月`;
+      const firstDay = new Date(viewYear, viewMonth, 1);
+      const daysCount = new Date(viewYear, viewMonth + 1, 0).getDate();
       const offset = (firstDay.getDay() + 6) % 7;
-      const totalCells = Math.ceil((offset + daysInMonth) / 7) * 7;
+      const total = Math.ceil((offset + daysCount) / 7) * 7;
       const todayStr = fmtDate(new Date());
 
+      let tHours = 0, tIncome = 0, tDays = 0, tSubsidy = 0;
       const frag = document.createDocumentFragment();
 
-      for (let i = 0; i < totalCells; i++) {
-        const d = new Date(y, m, i - offset + 1);
-        const dateStr = fmtDate(d);
-        const isOtherMonth = d.getMonth() !== m || d.getFullYear() !== y;
-        const log = workLogs[dateStr];
+      for (let i = 0; i < total; i++) {
+        const d = new Date(viewYear, viewMonth, i - offset + 1);
+        const ds = fmtDate(d);
+        const isOther = d.getMonth() !== viewMonth;
+        const log = logs[ds];
+
+        if (!isOther && log && log.hours > 0) {
+          tHours += log.hours;
+          tIncome += log.hours * log.rate + (log.subsidy || 0);
+          tSubsidy += (log.subsidy || 0);
+          tDays++;
+        }
 
         const cell = document.createElement('div');
-        cell.className = 'day-cell';
-        cell.setAttribute('role', 'button');
-        cell.setAttribute('tabindex', '0');
-        if (isOtherMonth) cell.classList.add('other-month');
-        if (dateStr === todayStr) cell.classList.add('today');
-        cell.setAttribute('aria-label',
-          dateStr + (log && log.hours > 0 ? '，已有打卡记录' : ''));
+        cell.className = `day-cell ${isOther ? 'other-month' : ''} ${ds === todayStr ? 'today' : ''}`;
+        cell.dataset.date = ds;
 
         const num = document.createElement('div');
         num.className = 'day-num';
-        num.textContent = String(d.getDate());
+        num.textContent = d.getDate();
         cell.appendChild(num);
 
-        if (log && log.hours > 0) {
+        if (!isOther && log && log.hours > 0) {
+          const typeClass = log.type || 'custom';
+          const prefix = typeClass === 'day' ? '白' : typeClass === 'night' ? '夜' : '';
+          
           const badge = document.createElement('div');
-          badge.className = 'work-badge ' + (
-            log.type === 'day' ? 'day-shift' :
-            log.type === 'night' ? 'night-shift' : 'custom-shift'
-          );
-          const prefix = log.type === 'day' ? '白 ' : log.type === 'night' ? '夜 ' : '';
-          badge.textContent = `${prefix}${fmtHours(log.hours)}h`;
+          badge.className = `work-badge ${typeClass}`;
+          badge.textContent = `${prefix}${log.hours}h`;
+          cell.appendChild(badge);
 
           const inc = document.createElement('div');
           inc.className = 'income-text';
-          inc.textContent = `¥${fmtMoney(logIncome(log))}`;
-
-          cell.appendChild(badge);
+          inc.textContent = `¥${log.hours*log.rate+(log.subsidy||0)}`;
           cell.appendChild(inc);
         }
-
-        const onClick = () => handleDayClick(dateStr, d.getFullYear(), d.getMonth());
-        cell.addEventListener('click', onClick);
-        cell.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            onClick();
-          }
-        });
-
         frag.appendChild(cell);
       }
 
-      const grid = $('daysGrid');
-      grid.innerHTML = '';
-      grid.appendChild(frag);
-
-      renderMonthStats();
+      $('daysGrid').innerHTML = '';
+      $('daysGrid').appendChild(frag);
+      
+      $('totalHours').textContent = tHours;
+      $('totalIncome').textContent = tIncome;
+      $('totalDays').textContent = tDays;
+      $('totalSubsidy').textContent = tSubsidy;
     }
 
-    function handleDayClick(dateStr, year, month) {
-      if (year !== VIEW.year || month !== VIEW.month) {
-        VIEW.year = year;
-        VIEW.month = month;
-        renderCalendar();
-      }
-      openActionModal(dateStr);
-    }
-
-    function summarize(prefix) {
-      let hours = 0, income = 0, days = 0, subsidy = 0;
-      let dayCount = 0, nightCount = 0, customCount = 0;
-      for (const ds in workLogs) {
-        if (ds.indexOf(prefix) !== 0) continue;
-        const log = workLogs[ds];
-        if (!log || !(log.hours > 0)) continue;
-        hours += Number(log.hours) || 0;
-        income += logIncome(log);
-        subsidy += Number(log.subsidy) || 0;
-        days++;
-        if (log.type === 'day') dayCount++;
-        else if (log.type === 'night') nightCount++;
-        else customCount++;
-      }
-      return {
-        hours: cleanNum(hours),
-        income: cleanNum(income),
-        subsidy: cleanNum(subsidy),
-        days: days,
-        dayCount: dayCount,
-        nightCount: nightCount,
-        customCount: customCount
-      };
-    }
-
-    function renderMonthStats() {
-      const s = summarize(`${VIEW.year}-${pad2(VIEW.month + 1)}`);
-      $('totalHours').textContent = fmtHours(s.hours);
-      $('totalIncome').textContent = fmtMoney(s.income);
-      $('totalDays').textContent = s.days;
-      $('totalSubsidy').textContent = fmtMoney(s.subsidy);
-    }
-
-    function renderYearStats() {
-      const y = STAT.year;
-      $('currentYearTitle').textContent = `${y} 年`;
-
-      const s = summarize(String(y));
-      $('yearTotalHours').textContent = fmtHours(s.hours);
-      $('yearTotalIncome').textContent = fmtMoney(s.income);
-      $('yearTotalDays').textContent = s.days;
-      $('yearDayCount').textContent = s.dayCount;
-      $('yearNightCount').textContent = s.nightCount;
-
-      if (openModals.indexOf('monthPickerModal') > -1) {
-        renderMonthPicker();
-      }
-    }
-
-    function renderMonthPicker() {
-      const year = STAT.year;
-      $('monthPickerTitle').textContent = `${year}年 · 选择月份`;
-      $('monthPickerSub').textContent = '点击某个月查看详细数据';
-
-      const grid = $('monthPickerGrid');
-      grid.innerHTML = '';
-      const frag = document.createDocumentFragment();
-
-      const currentYear = now.getFullYear();
-      const currentMonth = now.getMonth();
-
-      for (let m = 0; m < 12; m++) {
-        const s = summarize(`${year}-${pad2(m + 1)}`);
-        const item = document.createElement('div');
-        item.className = 'month-pick-item';
-        item.setAttribute('role', 'button');
-        item.setAttribute('tabindex', '0');
-
-        if (s.days === 0) item.classList.add('empty');
-        if (year === currentYear && m === currentMonth) item.classList.add('current');
-
-        const num = document.createElement('div');
-        num.className = 'month-pick-num';
-        num.textContent = `${m + 1}月`;
-
-        const hoursEl = document.createElement('div');
-        hoursEl.className = 'month-pick-hours';
-        hoursEl.textContent = s.days > 0
-          ? `${fmtHours(s.hours)}h · ${s.days}天`
-          : '无记录';
-
-        item.appendChild(num);
-        item.appendChild(hoursEl);
-
-        const onClick = () => {
-          closeModal('monthPickerModal');
-          openMonthDetail(year, m);
-        };
-        item.addEventListener('click', onClick);
-        item.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            onClick();
+    function renderStats() {
+      $('currentYearTitle').textContent = `${viewYear}年`;
+      let yHours = 0, yIncome = 0;
+      Object.keys(logs).forEach(ds => {
+        if (ds.startsWith(String(viewYear))) {
+          const l = logs[ds];
+          if (l && l.hours > 0) {
+            yHours += l.hours;
+            yIncome += l.hours * l.rate + (l.subsidy || 0);
           }
-        });
-
-        frag.appendChild(item);
-      }
-
-      grid.appendChild(frag);
+        }
+      });
+      $('yearTotalHours').textContent = yHours;
+      $('yearTotalIncome').textContent = yIncome;
     }
 
-    function openMonthPicker() {
-      renderMonthPicker();
-      openModal('monthPickerModal');
-    }
+    // 点击日历格子打开弹窗
+    $('daysGrid').addEventListener('click', e => {
+      const cell = e.target.closest('.day-cell');
+      if (!cell) return;
+      curDateStr = cell.dataset.date;
+      const log = logs[curDateStr] || {};
+      
+      $('actionModalTitle').textContent = `${curDateStr} 打卡`;
+      $('quickDayDesc').textContent = `${dayCfg.hours}h`;
+      $('quickNightDesc').textContent = `${nightCfg.hours}h`;
 
-    function openMonthDetail(year, month) {
-      monthDetailTarget = { year: year, month: month };
-      const s = summarize(`${year}-${pad2(month + 1)}`);
+      // 重置自定义输入区域的显示状态
+      $('customInputsArea').style.display = 'none';
 
-      $('monthDetailTitle').textContent = `${year}年${month + 1}月`;
-      $('mdIncome').textContent = `¥${fmtMoney(s.income)}`;
-      $('mdHours').textContent = `${fmtHours(s.hours)}h`;
-      $('mdDays').textContent = `${s.days}天`;
-      $('mdDayCount').textContent = `${s.dayCount}天`;
-      $('mdNightCount').textContent = `${s.nightCount}天`;
-      $('mdCustomCount').textContent = `${s.customCount}天`;
-
-      openModal('monthDetailModal');
-    }
-
-    function gotoMonthFromDetail() {
-      if (!monthDetailTarget) return;
-      const y = monthDetailTarget.year;
-      const m = monthDetailTarget.month;
-
-      closeModal('monthDetailModal');
-
-      VIEW.year = y;
-      VIEW.month = m;
-
-      document.querySelectorAll('.nav-item').forEach((n) => n.classList.remove('active'));
-      const calNav = document.querySelector('.nav-item[data-target="calendarPage"]');
-      if (calNav) calNav.classList.add('active');
-      document.querySelectorAll('.page-section').forEach((sec) => sec.classList.remove('active'));
-      $('calendarPage').classList.add('active');
-
-      renderCalendar();
-      toast(`已跳转到 ${y}年${m + 1}月`);
-    }
-
-    const openModals = [];
-
-    function openModal(id) {
-      const el = $(id);
-      if (!el) return;
-      el.classList.add('active');
-      if (openModals.indexOf(id) === -1) openModals.push(id);
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(id) {
-      const el = $(id);
-      if (!el) return;
-      el.classList.remove('active');
-      const idx = openModals.indexOf(id);
-      if (idx > -1) openModals.splice(idx, 1);
-      if (openModals.length === 0) document.body.style.overflow = '';
-      if (id === 'actionModal') resetClearButton();
-    }
-
-    function closeAllModals() {
-      openModals.slice().forEach(closeModal);
-    }
-
-    function resetClearButton() {
-      const btn = $('btnClearShift');
-      btn.classList.remove('armed');
-      $('clearShiftText').textContent = '🗑️ 清除打卡';
-      clearTimeout(btn._armTimer);
-    }
-
-    function openActionModal(dateStr) {
-      selectedDateStr = dateStr;
-      $('actionModalTitle').textContent = `${dateStr} 打卡`;
-
-      const d = dayShiftConfig;
-      const n = nightShiftConfig;
-      $('dayShiftSubText').textContent =
-        `${fmtHours(d.hours)}h / ¥${d.rate} / 补${d.subsidy}`;
-      $('nightShiftSubText').textContent =
-        `${fmtHours(n.hours)}h / ¥${n.rate} / 补${n.subsidy}`;
-
-      const log = workLogs[dateStr];
-      const hasLog = !!(log && log.hours > 0);
-
-      const info = $('currentLogInfo');
-      if (hasLog) {
-        const typeName = log.type === 'day' ? '白班' : log.type === 'night' ? '夜班' : '自定义';
-        info.textContent =
-          `当前记录：${typeName} ${fmtHours(log.hours)}h · ¥${fmtMoney(logIncome(log))}`;
-        info.hidden = false;
+      if (log.hours > 0) {
+        // 如果有现有记录
+        $('inputHours').value = log.hours;
+        $('inputRate').value = log.rate;
+        $('inputSubsidy').value = log.subsidy || '';
+        // 如果是自定义记录，自动展开输入框
+        if (log.type === 'custom') {
+          $('customInputsArea').style.display = 'block';
+        }
       } else {
-        info.hidden = true;
+        // 没有记录，预填默认白班数据备用
+        $('inputHours').value = dayCfg.hours;
+        $('inputRate').value = dayCfg.rate;
+        $('inputSubsidy').value = dayCfg.subsidy || '';
       }
+      
+      $('actionModal').classList.add('active');
+    });
 
-      resetClearButton();
-      $('btnClearShift').hidden = !hasLog;
+    // 点击白班按钮：直接保存
+    $('quickDayBtn').addEventListener('click', () => {
+      $('inputHours').value = dayCfg.hours;
+      $('inputRate').value = dayCfg.rate;
+      $('inputSubsidy').value = dayCfg.subsidy;
+      saveLog('day');
+    });
 
-      openModal('actionModal');
-    }
+    // 点击夜班按钮：直接保存
+    $('quickNightBtn').addEventListener('click', () => {
+      $('inputHours').value = nightCfg.hours;
+      $('inputRate').value = nightCfg.rate;
+      $('inputSubsidy').value = nightCfg.subsidy;
+      saveLog('night');
+    });
 
-    function applyPresetCheckin(type) {
-      const cfg = type === 'day' ? dayShiftConfig : nightShiftConfig;
-      workLogs[selectedDateStr] = {
+    // 点击自定义按钮：展开输入区域
+    $('quickCustomBtn').addEventListener('click', () => {
+      const log = logs[curDateStr];
+      // 如果当前记录是白班/夜班，点击自定义时，把当前参数带过来方便修改
+      if (log && log.type !== 'custom' && log.hours > 0) {
+        $('inputHours').value = log.hours;
+        $('inputRate').value = log.rate;
+        $('inputSubsidy').value = log.subsidy || '';
+      }
+      $('customInputsArea').style.display = 'block';
+      $('inputHours').focus();
+    });
+
+    function saveLog(type) {
+      const hours = parseFloat($('inputHours').value);
+      if (!hours || hours <= 0) {
+        toast('请输入有效工时');
+        return;
+      }
+      logs[curDateStr] = {
         type: type,
-        hours: cfg.hours,
-        rate: cfg.rate,
-        subsidy: cfg.subsidy
-      };
-      persistLogs();
-      closeModal('actionModal');
-      renderCalendar();
-      if (isStatsActive()) renderYearStats();
-      toast(`已记录 ${fmtHours(cfg.hours)}h ${type === 'day' ? '白班' : '夜班'}`);
-    }
-
-    function openCustomModal() {
-      const existing = workLogs[selectedDateStr];
-      const base = existing && existing.hours > 0
-        ? existing
-        : { hours: dayShiftConfig.hours, rate: dayShiftConfig.rate, subsidy: dayShiftConfig.subsidy };
-
-      $('customModalTitle').textContent = `${selectedDateStr} 自定义打卡`;
-      $('customHoursInput').value = fmtHours(base.hours);
-      $('customRateInput').value = base.rate;
-      $('customSubsidyInput').value = base.subsidy || 0;
-
-      openModal('customModal');
-      setTimeout(() => {
-        const input = $('customHoursInput');
-        input.focus();
-        input.select && input.select();
-      }, 120);
-    }
-
-    function saveCustomCheckin() {
-      const hours = parseFloat($('customHoursInput').value);
-      const rateRaw = parseFloat($('customRateInput').value);
-      const subsidyRaw = parseFloat($('customSubsidyInput').value);
-
-      if (!Number.isFinite(hours) || hours <= 0) {
-        toast('请输入有效的工时');
-        $('customHoursInput').focus();
-        return;
-      }
-
-      workLogs[selectedDateStr] = {
-        type: 'custom',
         hours: hours,
-        rate: Number.isFinite(rateRaw) ? Math.max(0, rateRaw) : dayShiftConfig.rate,
-        subsidy: Number.isFinite(subsidyRaw) ? subsidyRaw : 0
+        rate: parseFloat($('inputRate').value) || 0,
+        subsidy: parseFloat($('inputSubsidy').value) || 0
       };
-
-      persistLogs();
-      closeModal('customModal');
+      localStorage.setItem('workLogs', JSON.stringify(logs));
+      $('actionModal').classList.remove('active');
       renderCalendar();
-      if (isStatsActive()) renderYearStats();
-      toast('已保存自定义打卡');
+      toast('打卡成功');
     }
 
-    function onClearClick() {
-      const btn = $('btnClearShift');
+    // 底部保存按钮：默认保存为自定义
+    $('saveBtn').addEventListener('click', () => {
+      saveLog('custom');
+    });
 
-      if (!btn.classList.contains('armed')) {
-        btn.classList.add('armed');
-        $('clearShiftText').textContent = '⚠️ 再点一次确认删除';
-        clearTimeout(btn._armTimer);
-        btn._armTimer = setTimeout(resetClearButton, 3000);
-        return;
-      }
-
-      delete workLogs[selectedDateStr];
-      persistLogs();
-      resetClearButton();
-      closeModal('actionModal');
+    // 清除记录
+    $('deleteBtn').addEventListener('click', () => {
+      delete logs[curDateStr];
+      localStorage.setItem('workLogs', JSON.stringify(logs));
+      $('actionModal').classList.remove('active');
       renderCalendar();
-      if (isStatsActive()) renderYearStats();
-      toast('已删除该日记录');
-    }
+      toast('记录已清除');
+    });
 
-    function openSettingsModal() {
-      $('dayHoursInput').value = dayShiftConfig.hours;
-      $('dayRateInput').value = dayShiftConfig.rate;
-      $('daySubsidyInput').value = dayShiftConfig.subsidy;
+    $('prevMonthBtn').addEventListener('click', () => { viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} renderCalendar(); });
+    $('nextMonthBtn').addEventListener('click', () => { viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} renderCalendar(); });
 
-      $('nightHoursInput').value = nightShiftConfig.hours;
-      $('nightRateInput').value = nightShiftConfig.rate;
-      $('nightSubsidyInput').value = nightShiftConfig.subsidy;
+    $('prevYearBtn').addEventListener('click', () => { viewYear--; renderStats(); });
+    $('nextYearBtn').addEventListener('click', () => { viewYear++; renderStats(); });
 
-      openModal('settingsModal');
-    }
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        item.classList.add('active');
+        const target = item.dataset.target;
+        $(target).classList.add('active');
+        if (target === 'statsPage') renderStats();
+        else renderCalendar();
+      });
+    });
 
-    function readNumber(id, fallback, min) {
-      const v = parseFloat($(id).value);
-      if (!Number.isFinite(v)) return fallback;
-      return min !== undefined ? Math.max(min, v) : v;
-    }
+    $('openSettingsBtn').addEventListener('click', () => {
+      $('defDayHours').value = dayCfg.hours;
+      $('defDayRate').value = dayCfg.rate;
+      $('defDaySubsidy').value = dayCfg.subsidy;
+      
+      $('defNightHours').value = nightCfg.hours;
+      $('defNightRate').value = nightCfg.rate;
+      $('defNightSubsidy').value = nightCfg.subsidy;
+      
+      $('settingsModal').classList.add('active');
+    });
 
-    function saveSettings() {
-      const prevDay = Object.assign({}, dayShiftConfig);
-      const prevNight = Object.assign({}, nightShiftConfig);
-
-      dayShiftConfig = {
-        hours: readNumber('dayHoursInput', prevDay.hours, 0),
-        rate: readNumber('dayRateInput', prevDay.rate, 0),
-        subsidy: readNumber('daySubsidyInput', prevDay.subsidy)
+    $('saveSettings').addEventListener('click', () => {
+      dayCfg = {
+        hours: parseFloat($('defDayHours').value) || 0,
+        rate: parseFloat($('defDayRate').value) || 0,
+        subsidy: parseFloat($('defDaySubsidy').value) || 0
       };
-      nightShiftConfig = {
-        hours: readNumber('nightHoursInput', prevNight.hours, 0),
-        rate: readNumber('nightRateInput', prevNight.rate, 0),
-        subsidy: readNumber('nightSubsidyInput', prevNight.subsidy)
+      nightCfg = {
+        hours: parseFloat($('defNightHours').value) || 0,
+        rate: parseFloat($('defNightRate').value) || 0,
+        subsidy: parseFloat($('defNightSubsidy').value) || 0
       };
-
-      try {
-        localStorage.setItem(KEY_DAY, JSON.stringify(dayShiftConfig));
-        localStorage.setItem(KEY_NIGHT, JSON.stringify(nightShiftConfig));
-      } catch (e) {
-        toast('保存失败，存储空间可能已满');
-      }
-
-      closeModal('settingsModal');
-      renderCalendar();
+      localStorage.setItem('dayCfg', JSON.stringify(dayCfg));
+      localStorage.setItem('nightCfg', JSON.stringify(nightCfg));
+      $('settingsModal').classList.remove('active');
       toast('默认参数已更新');
-    }
+    });
 
-    function exportData() {
-      const payload = {
-        app: 'HeyYu',
-        version: 1,
+    $('exportBtn').addEventListener('click', () => {
+      const data = {
+        version: 2,
         exportedAt: new Date().toISOString(),
-        dayShiftConfig: dayShiftConfig,
-        nightShiftConfig: nightShiftConfig,
-        logs: workLogs
+        dayCfg: dayCfg,
+        nightCfg: nightCfg,
+        logs: logs
       };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `HeyYu-Backup-${fmtDate(new Date())}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast('备份文件已导出');
+    });
 
-      try {
-        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `工时记账-${fmtDate(new Date())}.json`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1500);
-        toast('备份已导出');
-      } catch (e) {
-        toast('导出失败，请稍后再试');
-      }
-    }
+    $('importBtn').addEventListener('click', () => $('importFile').click());
 
-    function importData(file) {
+    $('importFile').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
       const reader = new FileReader();
-      reader.onload = function () {
-        let data;
+      reader.onload = function(event) {
         try {
-          data = JSON.parse(String(reader.result));
-        } catch (e) {
-          toast('导入失败：不是有效的 JSON 文件');
-          return;
+          const json = JSON.parse(event.target.result);
+          if (!json.logs || typeof json.logs !== 'object') throw new Error();
+          if (confirm(`确定要从备份中恢复数据吗？这将覆盖当前的全部记录。`)) {
+            logs = json.logs;
+            if (json.dayCfg) dayCfg = json.dayCfg;
+            if (json.nightCfg) nightCfg = json.nightCfg;
+            localStorage.setItem('workLogs', JSON.stringify(logs));
+            localStorage.setItem('dayCfg', JSON.stringify(dayCfg));
+            localStorage.setItem('nightCfg', JSON.stringify(nightCfg));
+            renderCalendar();
+            $('settingsModal').classList.remove('active');
+            toast('数据恢复成功');
+          }
+        } catch (err) {
+          toast('导入失败：文件格式不正确');
         }
-
-        if (!data || typeof data !== 'object') {
-          toast('导入失败：文件内容格式不正确');
-          return;
-        }
-
-        const rawLogs = data.logs && typeof data.logs === 'object' ? data.logs : data;
-        const logs = sanitizeLogs(rawLogs);
-
-        if (Object.keys(logs).length === 0) {
-          toast('导入失败：未找到有效记录');
-          return;
-        }
-
-        if (!confirm(`将导入 ${Object.keys(logs).length} 条记录，是否覆盖当前全部数据？`)) {
-          return;
-        }
-
-        workLogs = logs;
-        if (data.dayShiftConfig) dayShiftConfig = normalizeConfig(data.dayShiftConfig, dayShiftConfig);
-        if (data.nightShiftConfig) nightShiftConfig = normalizeConfig(data.nightShiftConfig, nightShiftConfig);
-
-        persistLogs();
-        try {
-          localStorage.setItem(KEY_DAY, JSON.stringify(dayShiftConfig));
-          localStorage.setItem(KEY_NIGHT, JSON.stringify(nightShiftConfig));
-        } catch (e) { /* 忽略 */ }
-
-        closeModal('settingsModal');
-        renderCalendar();
-        renderYearStats();
-        toast('导入成功');
-      };
-      reader.onerror = function () {
-        toast('导入失败：文件读取异常');
+        e.target.value = '';
       };
       reader.readAsText(file);
-    }
-
-    function clearAllData() {
-      if (!confirm('确定要清空全部打卡记录吗？此操作不可恢复，建议先导出备份。')) return;
-      if (!confirm('再次确认：所有工时记录将被永久删除。')) return;
-
-      workLogs = {};
-      persistLogs();
-      closeModal('settingsModal');
-      renderCalendar();
-      renderYearStats();
-      toast('已清空全部记录');
-    }
-
-    function changeMonth(delta) {
-      let m = VIEW.month + delta;
-      let y = VIEW.year;
-      if (m < 0) { m = 11; y--; }
-      if (m > 11) { m = 0; y++; }
-      VIEW.year = y;
-      VIEW.month = m;
-      renderCalendar();
-      if (isStatsActive()) renderYearStats();
-    }
-
-    function changeStatYear(delta) {
-      STAT.year += delta;
-      renderYearStats();
-    }
-
-    function isStatsActive() {
-      return $('statsPage').classList.contains('active');
-    }
-
-    function initNavigation() {
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach((item) => {
-        item.addEventListener('click', () => {
-          const targetId = item.getAttribute('data-target');
-          if (item.classList.contains('active')) return;
-
-          navItems.forEach((n) => n.classList.remove('active'));
-          item.classList.add('active');
-
-          document.querySelectorAll('.page-section').forEach((sec) => sec.classList.remove('active'));
-          $(targetId).classList.add('active');
-
-          if (targetId === 'statsPage') {
-            renderYearStats();
-          } else {
-            renderCalendar();
-          }
-        });
-      });
-    }
-
-    function bindEvents() {
-      $('prevMonthBtn').addEventListener('click', () => changeMonth(-1));
-      $('nextMonthBtn').addEventListener('click', () => changeMonth(1));
-
-      $('prevYearBtn').addEventListener('click', () => changeStatYear(-1));
-      $('nextYearBtn').addEventListener('click', () => changeStatYear(1));
-
-      $('openSettingsBtn').addEventListener('click', openSettingsModal);
-      $('saveSettingsBtn').addEventListener('click', saveSettings);
-
-      $('openMonthPickerBtn').addEventListener('click', openMonthPicker);
-      $('gotoMonthBtn').addEventListener('click', gotoMonthFromDetail);
-
-      $('btnDayShift').addEventListener('click', () => applyPresetCheckin('day'));
-      $('btnNightShift').addEventListener('click', () => applyPresetCheckin('night'));
-      $('btnCustomShift').addEventListener('click', () => {
-        closeModal('actionModal');
-        openCustomModal();
-      });
-      $('btnClearShift').addEventListener('click', onClearClick);
-      $('saveCustomBtn').addEventListener('click', saveCustomCheckin);
-
-      ['customHoursInput', 'customRateInput', 'customSubsidyInput'].forEach((id) => {
-        $(id).addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            saveCustomCheckin();
-          }
-        });
-      });
-
-      $('exportBtn').addEventListener('click', exportData);
-      $('importBtn').addEventListener('click', () => $('importFile').click());
-      $('importFile').addEventListener('change', (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (file) importData(file);
-        e.target.value = '';
-      });
-      $('clearAllBtn').addEventListener('click', clearAllData);
-
-      document.querySelectorAll('[data-close]').forEach((btn) => {
-        btn.addEventListener('click', () => closeModal(btn.getAttribute('data-close')));
-      });
-
-      document.querySelectorAll('.modal').forEach((modal) => {
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) closeModal(modal.id);
-        });
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && openModals.length > 0) {
-          closeModal(openModals[openModals.length - 1]);
-        }
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      initNavigation();
-      bindEvents();
-      renderCalendar();
-      renderYearStats();
     });
+
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => $(btn.dataset.close).classList.remove('active'));
+    });
+
+    renderCalendar();
   })();
   </script>
 </body>
